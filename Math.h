@@ -3,6 +3,9 @@
 #include<iostream>
 #include<assert.h>
 
+struct Matrix;
+struct VectorN;
+
 struct Matrix
 {
 	float** matrixPtr;
@@ -12,6 +15,8 @@ struct Matrix
 
 Matrix CreateMatrix(int row, int column);
 Matrix CreateMatrixIdentity(int dimension);
+void SetRow(int row, Matrix& matrix, VectorN& rowVector);
+void SetColumn(int column, Matrix& matrix, VectorN& columnVector);
 void DeleteMatrix(Matrix& matrix);
 Matrix operator * (const Matrix& matrix1, const Matrix& matrix2);
 
@@ -32,3 +37,5 @@ VectorN operator * (const float& scaler, const VectorN& vector);
 VectorN operator * (const VectorN& vector, const float& scaler);
 
 /*...................... L O G S.......................*/
+void print(Matrix& matrix);
+void print(VectorN& vector);

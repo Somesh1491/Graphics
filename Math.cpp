@@ -1,5 +1,8 @@
 #include "Math.h"
 
+/*.........................FUNCTION DECLARATIONS.............................*/
+void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
+
 Matrix CreateMatrix(int row, int column)
 {
 	Matrix matrix;
@@ -24,12 +27,35 @@ Matrix CreateMatrixIdentity(int dimension)
 	for (int i = 0; i < dimension; i++)
 	{
 		matrix.matrixPtr[i] = (float*)calloc(dimension, sizeof(float));
+		matrix.matrixPtr[i][i] = 1;
 	}
 
 	matrix.row = dimension;
 	matrix.column = dimension;
 
 	return matrix;
+}
+
+void SetRow(int row, Matrix& matrix, VectorN& rowVector)
+{
+	/*................Precondition for Setting Row............................*/
+	assert(matrix.column == rowVector.size);
+
+	for (int i = 0; i < rowVector.size; i++)
+	{
+		matrix.matrixPtr[row][i] = rowVector.vectorPtr[i];
+	}
+}
+
+void SetColumn(int column, Matrix& matrix, VectorN& columnVector)
+{
+	/*................Precondition for Setting Column............................*/
+	assert(matrix.row == columnVector.size);
+
+	for (int i = 0; i < columnVector.size; i++)
+	{
+		matrix.matrixPtr[i][column] = columnVector.vectorPtr[i];
+	}
 }
 
 void DeleteMatrix(Matrix& matrix)
@@ -48,6 +74,14 @@ Matrix operator * (const Matrix& matrix1, const Matrix& matrix2)
 	resultMatrix.row = matrix1.row;
 	resultMatrix.column = matrix2.column;
 
+	DotProductMultiplication(matrix1, matrix2, resultMatrix);
+
+	return resultMatrix;
+}
+
+/*..........................Simple DOT Product Matrix Multiplication*/
+void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix)
+{
 	//Multiplication Logic
 	for (int i = 0; i < matrix1.row; i++)
 	{
@@ -59,8 +93,6 @@ Matrix operator * (const Matrix& matrix1, const Matrix& matrix2)
 			}
 		}
 	}
-
-	return resultMatrix;
 }
 
 VectorN CreateVector(int size)
@@ -107,6 +139,29 @@ VectorN operator*(const VectorN& vector, const float& scaler)
 		resultVector.vectorPtr[i] *= scaler;
 
 	return resultVector;
+}
+
+void print(Matrix& matrix)
+{
+	for (int i = 0; i < matrix.row; i++)
+	{
+		printf("[ ");
+		for (int j = 0; j < matrix.column; j++)
+		{
+			printf("%.2f ", matrix.matrixPtr[i][j]);
+		}
+		printf(" ]\n");
+	}
+}
+
+void print(VectorN& vector)
+{
+	printf("[ ");
+	for (int i = 0; i < vector.size; i++)
+	{
+		printf("%.2f ", vector.vectorPtr[i]);
+	}
+	printf(" ]\n");
 }
 
 
