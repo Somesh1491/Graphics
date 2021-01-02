@@ -1,0 +1,34 @@
+#pragma once
+
+#include<iostream>
+#include<assert.h>
+
+struct Matrix
+{
+	float** matrixPtr;
+	int row;
+	int column;
+};
+
+Matrix CreateMatrix(int row, int column);
+Matrix CreateMatrixIdentity(int dimension);
+void DeleteMatrix(Matrix& matrix);
+Matrix operator * (const Matrix& matrix1, const Matrix& matrix2);
+
+struct VectorN
+{
+	float* vectorPtr;
+	int size;
+};
+
+VectorN CreateVector(int size);
+void DeleteVector(VectorN& vector);
+
+/*......................DOT PRODUCT.....................*/
+float operator * (const VectorN& vector1, const VectorN& vector2);
+
+/*......................Scaler Multiplication*/
+VectorN operator * (const float& scaler, const VectorN& vector);
+VectorN operator * (const VectorN& vector, const float& scaler);
+
+/*...................... L O G S.......................*/
