@@ -108,9 +108,8 @@ void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matr
 }
 
 /*..........................Multiplication by Column.............................*/
-void ColumnWiseMultiplication(const Matrix & matrix1, const Matrix & matrix2, Matrix & resultMatrix)
+void ColumnWiseMultiplication(const Matrix & matrix1, const Matrix& matrix2, Matrix& resultMatrix)
 {
-
 }
 
 /*..........................Multiplication by Row.............................*/
@@ -128,6 +127,15 @@ VectorN CreateVector(int size)
 	VectorN vector;
 	vector.vectorPtr = (float*)calloc(size, sizeof(float));
 	vector.size = size;
+
+	return vector;
+}
+
+VectorN GetRandomVector(int size)
+{
+	VectorN vector = CreateVector(size);
+	for (int i = 0; i < vector.size; i++)
+		vector.vectorPtr[i] = rand() % 10;
 
 	return vector;
 }
@@ -165,6 +173,30 @@ VectorN operator*(const VectorN& vector, const float& scaler)
 	VectorN resultVector = CreateVector(vector.size);
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] *= scaler;
+
+	return resultVector;
+}
+
+VectorN operator+(const VectorN& vector1, const VectorN& vector2)
+{
+	//check precondition of vector dot product 
+	assert(vector1.size == vector2.size);
+
+	VectorN resultVector = CreateVector(vector1.size);
+	for (int i = 0; i < resultVector.size; i++)
+		resultVector.vectorPtr[i] = vector1.vectorPtr[i] + vector2.vectorPtr[i];
+
+	return resultVector;
+}
+
+VectorN operator-(const VectorN& vector1, const VectorN& vector2)
+{
+	//check precondition of vector dot product 
+	assert(vector1.size == vector2.size);
+
+	VectorN resultVector = CreateVector(vector1.size);
+	for (int i = 0; i < resultVector.size; i++)
+		resultVector.vectorPtr[i] = vector1.vectorPtr[i] - vector2.vectorPtr[i];
 
 	return resultVector;
 }

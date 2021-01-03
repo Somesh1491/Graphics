@@ -28,6 +28,7 @@ struct VectorN
 };
 
 VectorN CreateVector(int size);
+VectorN GetRandomVector(int size);
 void DeleteVector(VectorN& vector);
 
 /*......................DOT PRODUCT.....................*/
@@ -36,6 +37,10 @@ float operator * (const VectorN& vector1, const VectorN& vector2);
 /*......................Scaler Multiplication*/
 VectorN operator * (const float& scaler, const VectorN& vector);
 VectorN operator * (const VectorN& vector, const float& scaler);
+
+/*......................Addition And Substraction*........*/
+VectorN operator+(const VectorN& vector1, const VectorN& vector2);
+VectorN operator-(const VectorN& vector1, const VectorN& vector2);
 
 /*...................... L O G S.......................*/
 void print(Matrix& matrix);
