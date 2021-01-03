@@ -15,6 +15,7 @@ struct Matrix
 
 Matrix CreateMatrix(int row, int column);
 Matrix CreateMatrixIdentity(int dimension);
+Matrix GetRandomMatrix(int row, int column);
 void SetRow(int row, Matrix& matrix, VectorN& rowVector);
 void SetColumn(int column, Matrix& matrix, VectorN& columnVector);
 void DeleteMatrix(Matrix& matrix);

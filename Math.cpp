@@ -2,6 +2,9 @@
 
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
+void ColumnWiseMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
+void RowWiseMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
+void MatrixWiseMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
 
 Matrix CreateMatrix(int row, int column)
 {
@@ -36,6 +39,17 @@ Matrix CreateMatrixIdentity(int dimension)
 	return matrix;
 }
 
+Matrix GetRandomMatrix(int row, int column)
+{
+	Matrix matrix = CreateMatrix(row, column);
+	
+	for (int i = 0; i < row; i++)
+		for (int j = 0; j < column; j++)
+			matrix.matrixPtr[i][j] = rand() % 15;
+
+	return matrix;
+}
+
 void SetRow(int row, Matrix& matrix, VectorN& rowVector)
 {
 	/*................Precondition for Setting Row............................*/
@@ -59,9 +73,7 @@ void SetColumn(int column, Matrix& matrix, VectorN& columnVector)
 }
 
 void DeleteMatrix(Matrix& matrix)
-
 {
-
 	free(matrix.matrixPtr);
 }
 
@@ -79,7 +91,7 @@ Matrix operator * (const Matrix& matrix1, const Matrix& matrix2)
 	return resultMatrix;
 }
 
-/*..........................Simple DOT Product Matrix Multiplication*/
+/*..........................Simple DOT Product Matrix Multiplication.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix)
 {
 	//Multiplication Logic
@@ -93,6 +105,22 @@ void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matr
 			}
 		}
 	}
+}
+
+/*..........................Multiplication by Column.............................*/
+void ColumnWiseMultiplication(const Matrix & matrix1, const Matrix & matrix2, Matrix & resultMatrix)
+{
+
+}
+
+/*..........................Multiplication by Row.............................*/
+void RowWiseMultiplication(const Matrix & matrix1, const Matrix & matrix2, Matrix & resultMatrix)
+{
+}
+
+/*..........................Multiplication by Matrix.............................*/
+void MatrixWiseMultiplication(const Matrix & matrix1, const Matrix & matrix2, Matrix & resultMatrix)
+{
 }
 
 VectorN CreateVector(int size)
