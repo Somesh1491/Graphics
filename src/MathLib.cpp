@@ -1,4 +1,4 @@
-#include "Math.h"
+#include "MathLib.h"
 
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
