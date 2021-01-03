@@ -41,6 +41,7 @@ Matrix CreateMatrixIdentity(int dimension)
 
 Matrix GetRandomMatrix(int row, int column)
 {
+	srand(time(0));
 	Matrix matrix = CreateMatrix(row, column);
 	
 	for (int i = 0; i < row; i++)
@@ -91,6 +92,64 @@ Matrix operator * (const Matrix& matrix1, const Matrix& matrix2)
 	return resultMatrix;
 }
 
+VectorN operator * (const VectorN& vector, const Matrix& matrix)
+{
+	assert(vector.size == matrix.row);
+
+	VectorN resultVector = CreateVector(matrix.column);
+
+	VectorN* matrixToVectors = (VectorN*)malloc(sizeof(VectorN) * matrix.row);
+
+	/*..................Converting Matrix Rows into Vectors...............*/
+	for (int i = 0; i < matrix.row; i++)
+	{
+		matrixToVectors[i] = CreateVector(matrix.column);
+		int k = 0;
+		for (int j = 0; j < matrixToVectors[i].size; j++)
+		{
+			matrixToVectors[i].vectorPtr[j] = matrix.matrixPtr[i][k];
+			k++;
+		}
+	}
+
+	/*....................Adding Rows to get Final reusultant Vector........*/
+	for (int i = 0; i < matrix.row; i++)
+	{
+		resultVector = resultVector + (vector.vectorPtr[i] * matrixToVectors[i]);
+	}
+
+	return resultVector;
+}
+
+VectorN operator * (const Matrix& matrix, const VectorN& vector)
+{
+	assert(vector.size == matrix.column);
+
+	VectorN resultVector = CreateVector(matrix.row);
+
+	VectorN* matrixToVectors = (VectorN*)malloc(sizeof(VectorN) * matrix.column);
+
+	/*..................Converting Matrix Columns into Vectors...............*/
+	for (int i = 0; i < matrix.column; i++)
+	{
+		matrixToVectors[i] = CreateVector(matrix.row);
+		int k = 0;		
+		for (int j = 0; j < matrixToVectors[i].size; j++)
+		{
+			matrixToVectors[i].vectorPtr[j] = matrix.matrixPtr[k][i];
+			k++;
+		}
+	}
+
+	/*....................Adding Column to get Final reusultant Vector........*/
+	for (int i = 0; i < matrix.column; i++)
+	{
+		resultVector = resultVector + (vector.vectorPtr[i] * matrixToVectors[i]);
+	}
+
+	return resultVector;
+}
+
 /*..........................Simple DOT Product Matrix Multiplication.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix)
 {
@@ -133,6 +192,7 @@ VectorN CreateVector(int size)
 
 VectorN GetRandomVector(int size)
 {
+	srand(time(0));
 	VectorN vector = CreateVector(size);
 	for (int i = 0; i < vector.size; i++)
 		vector.vectorPtr[i] = rand() % 10;
@@ -163,7 +223,7 @@ VectorN operator*(const float& scaler, const VectorN& vector)
 {
 	VectorN resultVector = CreateVector(vector.size);	
 	for (int i = 0; i < resultVector.size; i++)
-		resultVector.vectorPtr[i] *= scaler;
+		resultVector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
 
 	return resultVector;
 }
@@ -172,7 +232,7 @@ VectorN operator*(const VectorN& vector, const float& scaler)
 {
 	VectorN resultVector = CreateVector(vector.size);
 	for (int i = 0; i < resultVector.size; i++)
-		resultVector.vectorPtr[i] *= scaler;
+		resultVector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
 
 	return resultVector;
 }
