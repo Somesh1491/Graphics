@@ -2,7 +2,7 @@
 
 #include<iostream>
 #include<assert.h>
-#include<time.h>
+#include "Timer.h"
 
 struct Matrix;
 struct VectorN;

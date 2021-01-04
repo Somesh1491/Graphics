@@ -2,9 +2,6 @@
 
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
-void ColumnWiseMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
-void RowWiseMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
-void MatrixWiseMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
 
 Matrix CreateMatrix(int row, int column)
 {
@@ -166,21 +163,6 @@ void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matr
 	}
 }
 
-/*..........................Multiplication by Column.............................*/
-void ColumnWiseMultiplication(const Matrix & matrix1, const Matrix& matrix2, Matrix& resultMatrix)
-{
-}
-
-/*..........................Multiplication by Row.............................*/
-void RowWiseMultiplication(const Matrix & matrix1, const Matrix & matrix2, Matrix & resultMatrix)
-{
-}
-
-/*..........................Multiplication by Matrix.............................*/
-void MatrixWiseMultiplication(const Matrix & matrix1, const Matrix & matrix2, Matrix & resultMatrix)
-{
-}
-
 VectorN CreateVector(int size)
 {
 	VectorN vector;
@@ -283,5 +265,3 @@ void print(VectorN& vector)
 	}
 	printf(" ]\n");
 }
-
-
