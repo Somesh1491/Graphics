@@ -3,8 +3,15 @@
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
 
+void Hello()
+{
+	int *a = new int[50];
+	free(a);
+}
+
 Matrix CreateMatrix(int row, int column)
 {
+	
 	Matrix matrix;
 	matrix.matrixPtr = (float**)malloc(sizeof(float*) * row);
 
@@ -72,6 +79,9 @@ void SetColumn(int column, Matrix& matrix, VectorN& columnVector)
 
 void DeleteMatrix(Matrix& matrix)
 {
+	for (int i = 0; i < matrix.row; i++)
+		free(matrix.matrixPtr[i]);
+
 	free(matrix.matrixPtr);
 }
 

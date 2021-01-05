@@ -1,19 +1,34 @@
-#include <iostream>
+#include "MemorySnap.h"
 #include "MathLib.h"
+#include<iostream>
+
+struct Test
+{
+	int** testPtr;
+};
 
 int main()
 {
-	Matrix m1 = GetRandomMatrix(100, 100);
-	Matrix m2 = GetRandomMatrix(100, 100);
-	
-	//print(m1);
-	//printf("\n");
+	InitMemSnap();
 
-	//print(m2);
-	
+	MemRecordStart();
+	{
+		Test t;
+		t.testPtr = (int**)malloc(sizeof(int*) * 20);
 
-	Matrix m3 = m1 * m2;
+		for (int i = 0; i < 20; i++)
+		{
+			t.testPtr[i] = (int*)malloc(sizeof(int) * 30);
+		}
 
-	system("pause");
-	return -1;
+		for (int i = 0; i < 20; i++)
+		{
+			free(t.testPtr[i]);
+		}
+
+		free(t.testPtr);
+	}
+	MemRecordStop();
+	DisplayMemStatus();
+	return 0;
 }

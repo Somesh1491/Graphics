@@ -14,6 +14,7 @@ struct Matrix
 	int column;
 };
 
+void Hello();
 Matrix CreateMatrix(int row, int column);
 Matrix CreateMatrixIdentity(int dimension);
 Matrix GetRandomMatrix(int row, int column);
