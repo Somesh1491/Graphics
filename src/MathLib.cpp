@@ -91,16 +91,20 @@ VectorN operator * (const VectorN& vector, const Matrix& matrix)
 {
 	assert(vector.size == matrix.row);
 
-	VectorN resultVector = CreateVector(matrix.column);
-
-	VectorN* matrixToVectors = (VectorN*)malloc(sizeof(VectorN) * matrix.row);
-
+	//MemRecordStart();
+	VectorN resultVector = CreateVector(matrix.column);	
 	/*....................Adding Rows to get Final reusultant Vector........*/
-	for (int i = 0; i < matrix.row; i++)
+	/*for (int i = 0; i < matrix.row; i++)
 	{
-		resultVector = resultVector + (vector.vectorPtr[i] * matrix.vector[i]);
-	}
-
+		VectorN tempMultiplicationResult = vector.vectorPtr[i] * matrix.vector[i];
+		resultVector = resultVector + tempMultiplicationResult;
+		
+		//Delete Memory of Temp Result;
+		DeleteVector(tempMultiplicationResult);
+	}*/
+	//MemRecordStop();
+	//std::cout << "Inside" << std::endl;
+	//DisplayMemStatus();
 	return resultVector;
 }
 
@@ -128,7 +132,13 @@ VectorN operator * (const Matrix& matrix, const VectorN& vector)
 	for (int i = 0; i < matrix.column; i++)
 	{
 		resultVector = resultVector + (vector.vectorPtr[i] * matrixToVectors[i]);
+
+		//Deleting Vector's Memory
+		DeleteVector(matrixToVectors[i]);
 	}
+	
+	//Deleting Pointer to Vector's Array
+	free(matrixToVectors);
 
 	return resultVector;
 }
