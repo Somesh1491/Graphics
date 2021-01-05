@@ -3,21 +3,15 @@
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
 
-void Hello()
-{
-	int *a = new int[50];
-	free(a);
-}
-
 Matrix CreateMatrix(int row, int column)
 {
 	
 	Matrix matrix;
-	matrix.matrixPtr = (float**)malloc(sizeof(float*) * row);
+	matrix.vector = (VectorN*)malloc(sizeof(VectorN) * row);
 
 	for (int i = 0; i < row; i++)
 	{
-		matrix.matrixPtr[i] = (float*)calloc(column, sizeof(float));
+		matrix.vector[i] = CreateVector(column);
 	}
 
 	matrix.row = row;
@@ -29,12 +23,12 @@ Matrix CreateMatrix(int row, int column)
 Matrix CreateMatrixIdentity(int dimension)
 {
 	Matrix matrix;
-	matrix.matrixPtr = (float**)malloc(sizeof(float*) * dimension);
+	matrix.vector = (VectorN*)malloc(sizeof(VectorN) * dimension);
 
 	for (int i = 0; i < dimension; i++)
 	{
-		matrix.matrixPtr[i] = (float*)calloc(dimension, sizeof(float));
-		matrix.matrixPtr[i][i] = 1;
+		matrix.vector[i] = CreateVector(dimension);
+		matrix.vector[i].vectorPtr[i] = 1;
 	}
 
 	matrix.row = dimension;
@@ -50,39 +44,33 @@ Matrix GetRandomMatrix(int row, int column)
 	
 	for (int i = 0; i < row; i++)
 		for (int j = 0; j < column; j++)
-			matrix.matrixPtr[i][j] = rand() % 15;
+			matrix.vector[i].vectorPtr[j] = rand() % 15;
 
 	return matrix;
 }
 
-void SetRow(int row, Matrix& matrix, VectorN& rowVector)
+void SetRow(int row, Matrix& matrix, const float* rowData)
 {
-	/*................Precondition for Setting Row............................*/
-	assert(matrix.column == rowVector.size);
-
-	for (int i = 0; i < rowVector.size; i++)
+	for (int i = 0; i < matrix.column; i++)
 	{
-		matrix.matrixPtr[row][i] = rowVector.vectorPtr[i];
+		matrix.vector[row].vectorPtr[i] = rowData[i];
 	}
 }
 
-void SetColumn(int column, Matrix& matrix, VectorN& columnVector)
+void SetColumn(int column, Matrix& matrix, const float* columnData)
 {
-	/*................Precondition for Setting Column............................*/
-	assert(matrix.row == columnVector.size);
-
-	for (int i = 0; i < columnVector.size; i++)
+	for (int i = 0; i < matrix.row; i++)
 	{
-		matrix.matrixPtr[i][column] = columnVector.vectorPtr[i];
+		matrix.vector[i].vectorPtr[column] = columnData[i];
 	}
 }
 
 void DeleteMatrix(Matrix& matrix)
 {
 	for (int i = 0; i < matrix.row; i++)
-		free(matrix.matrixPtr[i]);
+		DeleteVector(matrix.vector[i]);
 
-	free(matrix.matrixPtr);
+	free(matrix.vector);
 }
 
 Matrix operator * (const Matrix& matrix1, const Matrix& matrix2)
@@ -107,22 +95,10 @@ VectorN operator * (const VectorN& vector, const Matrix& matrix)
 
 	VectorN* matrixToVectors = (VectorN*)malloc(sizeof(VectorN) * matrix.row);
 
-	/*..................Converting Matrix Rows into Vectors...............*/
-	for (int i = 0; i < matrix.row; i++)
-	{
-		matrixToVectors[i] = CreateVector(matrix.column);
-		int k = 0;
-		for (int j = 0; j < matrixToVectors[i].size; j++)
-		{
-			matrixToVectors[i].vectorPtr[j] = matrix.matrixPtr[i][k];
-			k++;
-		}
-	}
-
 	/*....................Adding Rows to get Final reusultant Vector........*/
 	for (int i = 0; i < matrix.row; i++)
 	{
-		resultVector = resultVector + (vector.vectorPtr[i] * matrixToVectors[i]);
+		resultVector = resultVector + (vector.vectorPtr[i] * matrix.vector[i]);
 	}
 
 	return resultVector;
@@ -143,7 +119,7 @@ VectorN operator * (const Matrix& matrix, const VectorN& vector)
 		int k = 0;		
 		for (int j = 0; j < matrixToVectors[i].size; j++)
 		{
-			matrixToVectors[i].vectorPtr[j] = matrix.matrixPtr[k][i];
+			matrixToVectors[i].vectorPtr[j] = matrix.vector[k].vectorPtr[i];
 			k++;
 		}
 	}
@@ -167,7 +143,7 @@ void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matr
 		{
 			for (int k = 0; k < matrix1.column; k++)
 			{
-				resultMatrix.matrixPtr[i][j] += matrix1.matrixPtr[i][k] * matrix2.matrixPtr[k][j];
+				resultMatrix.vector[i].vectorPtr[j] += matrix1.vector[i].vectorPtr[k] * matrix2.vector[k].vectorPtr[j];
 			}
 		}
 	}
@@ -192,7 +168,7 @@ VectorN GetRandomVector(int size)
 	return vector;
 }
 
-void DeleteVector(VectorN & vector)
+void DeleteVector(VectorN& vector)
 {
 	free(vector.vectorPtr);
 }
@@ -260,7 +236,7 @@ void print(Matrix& matrix)
 		printf("[ ");
 		for (int j = 0; j < matrix.column; j++)
 		{
-			printf("%.2f ", matrix.matrixPtr[i][j]);
+			printf("%.2f ", matrix.vector[i].vectorPtr[j]);
 		}
 		printf(" ]\n");
 	}

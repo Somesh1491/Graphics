@@ -9,17 +9,16 @@ struct VectorN;
 
 struct Matrix
 {
-	float** matrixPtr;
+	VectorN* vector;
 	int row;
 	int column;
 };
 
-void Hello();
 Matrix CreateMatrix(int row, int column);
 Matrix CreateMatrixIdentity(int dimension);
 Matrix GetRandomMatrix(int row, int column);
-void SetRow(int row, Matrix& matrix, VectorN& rowVector);
-void SetColumn(int column, Matrix& matrix, VectorN& columnVector);
+void SetRow(int row, Matrix& matrix, const float* data);
+void SetColumn(int column, Matrix& matrix, const float* data);
 void DeleteMatrix(Matrix& matrix);
 Matrix operator * (const Matrix& matrix1, const Matrix& matrix2);
 /*..........................Return a Row Vector.............*/
