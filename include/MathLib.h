@@ -49,5 +49,5 @@ VectorN operator+(const VectorN& vector1, const VectorN& vector2);
 VectorN operator-(const VectorN& vector1, const VectorN& vector2);
 
 /*...................... L O G S.......................*/
-void print(Matrix& matrix);
-void print(VectorN& vector);
+void print(const Matrix& matrix);
+void print(const VectorN& vector);

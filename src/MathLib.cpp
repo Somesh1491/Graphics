@@ -91,20 +91,18 @@ VectorN operator * (const VectorN& vector, const Matrix& matrix)
 {
 	assert(vector.size == matrix.row);
 
-	//MemRecordStart();
 	VectorN resultVector = CreateVector(matrix.column);	
-	/*....................Adding Rows to get Final reusultant Vector........*/
-	/*for (int i = 0; i < matrix.row; i++)
+	
+	for (int i = 0; i < resultVector.size; i++)
 	{
-		VectorN tempMultiplicationResult = vector.vectorPtr[i] * matrix.vector[i];
-		resultVector = resultVector + tempMultiplicationResult;
-		
-		//Delete Memory of Temp Result;
-		DeleteVector(tempMultiplicationResult);
-	}*/
-	//MemRecordStop();
-	//std::cout << "Inside" << std::endl;
-	//DisplayMemStatus();
+		int k = 0;
+		for (int j = 0; j < matrix.row; j++)
+		{
+			resultVector.vectorPtr[i] += vector.vectorPtr[k] * matrix.vector[j].vectorPtr[i];
+			k++;
+		}
+	}
+
 	return resultVector;
 }
 
@@ -114,31 +112,15 @@ VectorN operator * (const Matrix& matrix, const VectorN& vector)
 
 	VectorN resultVector = CreateVector(matrix.row);
 
-	VectorN* matrixToVectors = (VectorN*)malloc(sizeof(VectorN) * matrix.column);
-
-	/*..................Converting Matrix Columns into Vectors...............*/
-	for (int i = 0; i < matrix.column; i++)
+	for (int i = 0; i < resultVector.size; i++)
 	{
-		matrixToVectors[i] = CreateVector(matrix.row);
-		int k = 0;		
-		for (int j = 0; j < matrixToVectors[i].size; j++)
+		int k = 0;
+		for (int j = 0; j < matrix.column; j++)
 		{
-			matrixToVectors[i].vectorPtr[j] = matrix.vector[k].vectorPtr[i];
+			resultVector.vectorPtr[i] += matrix.vector[i].vectorPtr[j] * vector.vectorPtr[k];
 			k++;
 		}
 	}
-
-	/*....................Adding Column to get Final reusultant Vector........*/
-	for (int i = 0; i < matrix.column; i++)
-	{
-		resultVector = resultVector + (vector.vectorPtr[i] * matrixToVectors[i]);
-
-		//Deleting Vector's Memory
-		DeleteVector(matrixToVectors[i]);
-	}
-	
-	//Deleting Pointer to Vector's Array
-	free(matrixToVectors);
 
 	return resultVector;
 }
@@ -239,7 +221,7 @@ VectorN operator-(const VectorN& vector1, const VectorN& vector2)
 	return resultVector;
 }
 
-void print(Matrix& matrix)
+void print(const Matrix& matrix)
 {
 	for (int i = 0; i < matrix.row; i++)
 	{
@@ -252,7 +234,7 @@ void print(Matrix& matrix)
 	}
 }
 
-void print(VectorN& vector)
+void print(const VectorN& vector)
 {
 	printf("[ ");
 	for (int i = 0; i < vector.size; i++)
