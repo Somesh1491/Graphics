@@ -3,6 +3,7 @@
 #include<iostream>
 #include<assert.h>
 #include "Timer.h"
+#include "MemorySnap.h"
 
 struct Matrix;
 struct VectorN;
