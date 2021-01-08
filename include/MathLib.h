@@ -2,52 +2,53 @@
 
 #include<iostream>
 #include<assert.h>
-#include "Timer.h"
-#include "MemorySnap.h"
+#include<time.h>
 
-struct Matrix;
-struct VectorN;
+struct x_matrix;
+struct x_vector;
 
-struct Matrix
+struct x_matrix
 {
-	VectorN* vector;
+	x_vector* vector;
 	int row;
 	int column;
 };
 
-Matrix CreateMatrix(int row, int column);
-Matrix CreateMatrixIdentity(int dimension);
-Matrix GetRandomMatrix(int row, int column);
-void SetRow(int row, Matrix& matrix, const float* data);
-void SetColumn(int column, Matrix& matrix, const float* data);
-void DeleteMatrix(Matrix& matrix);
-Matrix operator * (const Matrix& matrix1, const Matrix& matrix2);
+void CreateMatrix(int row, int column, x_matrix& matrix);
+void CreateMatrixIdentity(int dimension, x_matrix& matrix);
+void GetRandomMatrix(int row, int column, x_matrix&matrix);
+bool  isInvertible(x_matrix& matrix);
+void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix);
+void SetRow(int row, x_matrix& matrix, const float* data);
+void SetColumn(int column, x_matrix& matrix, const float* data);
+void DeleteMatrix(x_matrix& matrix);
+void MultiplyMatrix(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix);
 /*..........................Return a Row Vector.............*/
-VectorN operator * (const VectorN& vector, const Matrix& matrix);
+void MultiplyMatrixWithVector(const x_vector& vector, const x_matrix& matrix, x_vector& resultVector);
 /*..........................Return a Column Vector.............*/
-VectorN operator * (const Matrix& matrix, const VectorN& vector);
+void MultiplyMatrixWithVector(const x_matrix& matrix, const x_vector& vector, x_vector& resultVector);
 
-struct VectorN
+struct x_vector
 {
 	float* vectorPtr;
 	int size;
 };
 
-VectorN CreateVector(int size);
-VectorN GetRandomVector(int size);
-void DeleteVector(VectorN& vector);
+void CreateVector(int size, x_vector& resultVector);
+void GetRandomVector(int size, x_vector& resultVector);
+void DeleteVector(x_vector& vector);
 
 /*......................DOT PRODUCT.....................*/
-float operator * (const VectorN& vector1, const VectorN& vector2);
+float DotProduct (const x_vector& vector1, const x_vector& vector2);
 
 /*......................Scaler Multiplication*/
-VectorN operator * (const float& scaler, const VectorN& vector);
-VectorN operator * (const VectorN& vector, const float& scaler);
+x_vector MultiplyVector (const float& scaler, const x_vector& vector, x_vector& resultVector);
+x_vector MultiplyVector (const x_vector& vector, const float& scaler, x_vector& resultVector);
 
 /*......................Addition And Substraction*........*/
-VectorN operator+(const VectorN& vector1, const VectorN& vector2);
-VectorN operator-(const VectorN& vector1, const VectorN& vector2);
+void AddVector(const x_vector& vector1, const x_vector& vector2, x_vector& resultVector);
+void SubVector(const x_vector& vector1, const x_vector& vector2, x_vector& resultVector);
 
 /*...................... L O G S.......................*/
-void print(const Matrix& matrix);
-void print(const VectorN& vector);
+void print(const x_matrix& matrix);
+void print(const x_vector& vector);

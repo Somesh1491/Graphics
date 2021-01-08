@@ -1,55 +1,59 @@
 #include "MathLib.h"
 
 /*.........................FUNCTION DECLARATIONS.............................*/
-void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix);
+void DotProductMultiplication(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix);
 
-Matrix CreateMatrix(int row, int column)
+void CreateMatrix(int row, int column, x_matrix& matrix)
 {
-	
-	Matrix matrix;
-	matrix.vector = (VectorN*)malloc(sizeof(VectorN) * row);
+	matrix.vector = (x_vector*)malloc(sizeof(x_vector) * row);
 
 	for (int i = 0; i < row; i++)
 	{
-		matrix.vector[i] = CreateVector(column);
+		CreateVector(column, matrix.vector[i]);
 	}
 
 	matrix.row = row;
 	matrix.column = column;
-
-	return matrix;
 }
 
-Matrix CreateMatrixIdentity(int dimension)
+void CreateMatrixIdentity(int dimension, x_matrix& matrix)
 {
-	Matrix matrix;
-	matrix.vector = (VectorN*)malloc(sizeof(VectorN) * dimension);
+	matrix.vector = (x_vector*)malloc(sizeof(x_vector) * dimension);
 
 	for (int i = 0; i < dimension; i++)
 	{
-		matrix.vector[i] = CreateVector(dimension);
+		CreateVector(dimension, matrix.vector[i]);
 		matrix.vector[i].vectorPtr[i] = 1;
 	}
 
 	matrix.row = dimension;
 	matrix.column = dimension;
-
-	return matrix;
 }
 
-Matrix GetRandomMatrix(int row, int column)
+void GetRandomMatrix(int row, int column, x_matrix& matrix)
 {
 	srand(time(0));
-	Matrix matrix = CreateMatrix(row, column);
 	
 	for (int i = 0; i < row; i++)
 		for (int j = 0; j < column; j++)
 			matrix.vector[i].vectorPtr[j] = rand() % 15;
-
-	return matrix;
 }
 
-void SetRow(int row, Matrix& matrix, const float* rowData)
+bool isInvertible(x_matrix& matrix)
+{
+	return false;
+}
+
+/*...........................Gauss Jordan Elimination Approach....................*/
+void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix)
+{
+	//Must be sqaure matrix
+	assert(matrix.row == matrix.column);
+    //Inverse must exist
+	assert(isInvertible(matrix));
+}
+
+void SetRow(int row, x_matrix& matrix, const float* rowData)
 {
 	for (int i = 0; i < matrix.column; i++)
 	{
@@ -57,7 +61,7 @@ void SetRow(int row, Matrix& matrix, const float* rowData)
 	}
 }
 
-void SetColumn(int column, Matrix& matrix, const float* columnData)
+void SetColumn(int column, x_matrix& matrix, const float* columnData)
 {
 	for (int i = 0; i < matrix.row; i++)
 	{
@@ -65,7 +69,7 @@ void SetColumn(int column, Matrix& matrix, const float* columnData)
 	}
 }
 
-void DeleteMatrix(Matrix& matrix)
+void DeleteMatrix(x_matrix& matrix)
 {
 	for (int i = 0; i < matrix.row; i++)
 		DeleteVector(matrix.vector[i]);
@@ -73,26 +77,23 @@ void DeleteMatrix(Matrix& matrix)
 	free(matrix.vector);
 }
 
-Matrix operator * (const Matrix& matrix1, const Matrix& matrix2)
+void MultiplyMatrix(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix)
 {
 	//check precondition of matrix multiplication
 	assert(matrix1.column == matrix2.row);
 
-	Matrix resultMatrix = CreateMatrix(matrix1.row, matrix2.column);
 	resultMatrix.row = matrix1.row;
 	resultMatrix.column = matrix2.column;
 
 	DotProductMultiplication(matrix1, matrix2, resultMatrix);
-
-	return resultMatrix;
 }
 
-VectorN operator * (const VectorN& vector, const Matrix& matrix)
+void MultiplyMatrixWithVector(const x_vector& vector, const x_matrix& matrix, x_vector& resultVector)
 {
 	assert(vector.size == matrix.row);
-
-	VectorN resultVector = CreateVector(matrix.column);	
 	
+	CreateVector(matrix.column, resultVector);
+
 	for (int i = 0; i < resultVector.size; i++)
 	{
 		int k = 0;
@@ -102,15 +103,13 @@ VectorN operator * (const VectorN& vector, const Matrix& matrix)
 			k++;
 		}
 	}
-
-	return resultVector;
 }
 
-VectorN operator * (const Matrix& matrix, const VectorN& vector)
+void MultiplyMatrixWithVector(const x_matrix& matrix, const x_vector& vector, x_vector& resultVector)
 {
 	assert(vector.size == matrix.column);
 
-	VectorN resultVector = CreateVector(matrix.row);
+	CreateVector(matrix.row, resultVector);
 
 	for (int i = 0; i < resultVector.size; i++)
 	{
@@ -121,12 +120,10 @@ VectorN operator * (const Matrix& matrix, const VectorN& vector)
 			k++;
 		}
 	}
-
-	return resultVector;
 }
 
 /*..........................Simple DOT Product Matrix Multiplication.............................*/
-void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matrix& resultMatrix)
+void DotProductMultiplication(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix)
 {
 	//Multiplication Logic
 	for (int i = 0; i < matrix1.row; i++)
@@ -141,31 +138,26 @@ void DotProductMultiplication(const Matrix& matrix1, const Matrix& matrix2, Matr
 	}
 }
 
-VectorN CreateVector(int size)
+void CreateVector(int size, x_vector& resultVector)
 {
-	VectorN vector;
-	vector.vectorPtr = (float*)calloc(size, sizeof(float));
-	vector.size = size;
-
-	return vector;
+	resultVector.vectorPtr = (float*)calloc(size, sizeof(float));
+	resultVector.size = size;
 }
 
-VectorN GetRandomVector(int size)
+void GetRandomVector(int size, x_vector& resultVector)
 {
 	srand(time(0));
-	VectorN vector = CreateVector(size);
-	for (int i = 0; i < vector.size; i++)
-		vector.vectorPtr[i] = rand() % 10;
-
-	return vector;
+	CreateVector(size, resultVector);
+	for (int i = 0; i < resultVector.size; i++)
+		resultVector.vectorPtr[i] = rand() % 10;
 }
 
-void DeleteVector(VectorN& vector)
+void DeleteVector(x_vector& vector)
 {
 	free(vector.vectorPtr);
 }
 
-float operator*(const VectorN& vector1, const VectorN& vector2)
+float DotProduct(const x_vector& vector1, const x_vector& vector2)
 {
 	//check precondition of vector dot product 
 	assert(vector1.size == vector2.size);
@@ -179,49 +171,45 @@ float operator*(const VectorN& vector1, const VectorN& vector2)
 	return sum;
 }
 
-VectorN operator*(const float& scaler, const VectorN& vector)
+x_vector MultiplyVector(const float& scaler, const x_vector& vector, x_vector& resultVector)
 {
-	VectorN resultVector = CreateVector(vector.size);	
+	CreateVector(vector.size, resultVector);	
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
 
 	return resultVector;
 }
 
-VectorN operator*(const VectorN& vector, const float& scaler)
+x_vector MultiplyVector(const x_vector& vector, const float& scaler, x_vector& resultVector)
 {
-	VectorN resultVector = CreateVector(vector.size);
+	CreateVector(vector.size, resultVector);
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
 
 	return resultVector;
 }
 
-VectorN operator+(const VectorN& vector1, const VectorN& vector2)
+void AddVector(const x_vector& vector1, const x_vector& vector2, x_vector& resultVector)
 {
 	//check precondition of vector dot product 
 	assert(vector1.size == vector2.size);
 
-	VectorN resultVector = CreateVector(vector1.size);
+	CreateVector(vector1.size, resultVector);
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector1.vectorPtr[i] + vector2.vectorPtr[i];
-
-	return resultVector;
 }
 
-VectorN operator-(const VectorN& vector1, const VectorN& vector2)
+void SubVector(const x_vector& vector1, const x_vector& vector2, x_vector& resultVector)
 {
 	//check precondition of vector dot product 
 	assert(vector1.size == vector2.size);
 
-	VectorN resultVector = CreateVector(vector1.size);
+	CreateVector(vector1.size, resultVector);
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector1.vectorPtr[i] - vector2.vectorPtr[i];
-
-	return resultVector;
 }
 
-void print(const Matrix& matrix)
+void print(const x_matrix& matrix)
 {
 	for (int i = 0; i < matrix.row; i++)
 	{
@@ -234,7 +222,7 @@ void print(const Matrix& matrix)
 	}
 }
 
-void print(const VectorN& vector)
+void print(const x_vector& vector)
 {
 	printf("[ ");
 	for (int i = 0; i < vector.size; i++)
