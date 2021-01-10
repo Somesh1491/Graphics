@@ -30,6 +30,14 @@ void CreateMatrixIdentity(int dimension, x_matrix& matrix)
 	matrix.column = dimension;
 }
 
+void MakeMatrixIdentity(x_matrix & matrix)
+{
+	assert(matrix.row == matrix.column);
+
+	for (int i = 0; i < matrix.row; i++)
+		matrix.vector[i].vectorPtr[i] = 1;
+}
+
 void GetRandomMatrix(int row, int column, x_matrix& matrix)
 {
 	srand(time(0));	
@@ -65,7 +73,23 @@ void GetUpperTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 //Right now we assume that all matrix has non-zero pivot later we update the logic
 void GetLowerTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 {
+	//Must be square matrix
+	assert(matrix.row == matrix.column);
+
 	CopyMatrix(matrix, resultMatrix);
+	//Upper Row
+	for (int i = resultMatrix.row - 1; i > 0; i--)
+	{
+		//Lower Row
+		for (int j = i - 1; j >= 0; j--)
+		{
+			float multiplier = (resultMatrix.vector[j].vectorPtr[i]) / (resultMatrix.vector[i].vectorPtr[i]);
+			for (int k = 0; k < resultMatrix.column; k++)
+			{
+				resultMatrix.vector[j].vectorPtr[k] = (resultMatrix.vector[j].vectorPtr[k]) - (multiplier * resultMatrix.vector[i].vectorPtr[k]);
+			}
+		}
+	}
 }
 
 float GetDeterminant(x_matrix & matrix)
@@ -86,7 +110,7 @@ float GetDeterminant(x_matrix & matrix)
 
 bool isInvertible(x_matrix& matrix)
 {
-	return false;
+	return true;
 }
 
 /*...........................Gauss Jordan Elimination Approach....................*/
@@ -96,6 +120,53 @@ void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix)
 	assert(matrix.row == matrix.column);
     //Inverse must exist
 	assert(isInvertible(matrix));
+
+	//make inverse matrix identity
+	x_matrix tempMatrix;
+	CopyMatrix(matrix, tempMatrix);
+	CreateMatrixIdentity(matrix.row, inverseMatrix);
+
+	//UpperTriangle Conversion
+	for (int i = 0; i < tempMatrix.row - 1; i++)
+	{
+		for (int j = i + 1; j < tempMatrix.row; j++)
+		{
+			float multiplier = (tempMatrix.vector[j].vectorPtr[i]) / (tempMatrix.vector[i].vectorPtr[i]);
+			for (int k = 0; k < tempMatrix.column; k++)
+			{
+				tempMatrix.vector[j].vectorPtr[k] = (tempMatrix.vector[j].vectorPtr[k]) - (multiplier * tempMatrix.vector[i].vectorPtr[k]);
+
+				//Same operation applied in Inverse matrix
+				inverseMatrix.vector[j].vectorPtr[k] = (inverseMatrix.vector[j].vectorPtr[k]) - (multiplier * inverseMatrix.vector[i].vectorPtr[k]);
+			}
+		}
+	}
+
+	//LowerTriangle Conversion
+	for (int i = tempMatrix.row - 1; i > 0; i--)
+	{
+		//Lower Row
+		for (int j = i - 1; j >= 0; j--)
+		{
+			float multiplier = (tempMatrix.vector[j].vectorPtr[i]) / (tempMatrix.vector[i].vectorPtr[i]);
+			for (int k = 0; k < tempMatrix.column; k++)
+			{
+				tempMatrix.vector[j].vectorPtr[k] = (tempMatrix.vector[j].vectorPtr[k]) - (multiplier * tempMatrix.vector[i].vectorPtr[k]);
+				
+				//Same operation applied in Inverse matrix
+				inverseMatrix.vector[j].vectorPtr[k] = (inverseMatrix.vector[j].vectorPtr[k]) - (multiplier * inverseMatrix.vector[i].vectorPtr[k]);
+			}
+		}
+	}
+
+	//divide by pivot to make temp matrix identity
+	for (int i = 0; i < inverseMatrix.row; i++)
+	{
+		float multiplier = 1.0f / tempMatrix.vector[i].vectorPtr[i];
+		MultiplyVector(multiplier, inverseMatrix.vector[i]);
+	}
+
+	DeleteMatrix(tempMatrix);
 }
 
 void SetRow(int row, x_matrix& matrix, const float* rowData)
@@ -233,13 +304,12 @@ x_vectorN MultiplyVector(const float& scaler, const x_vectorN& vector, x_vectorN
 	return resultVector;
 }
 
-x_vectorN MultiplyVector(const x_vectorN& vector, const float& scaler, x_vectorN& resultVector)
+x_vectorN MultiplyVector(const float & scaler, const x_vectorN vector)
 {
-	CreateVector(vector.size, resultVector);
-	for (int i = 0; i < resultVector.size; i++)
-		resultVector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
+	for (int i = 0; i < vector.size; i++)
+		vector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
 
-	return resultVector;
+	return vector;
 }
 
 void AddVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& resultVector)

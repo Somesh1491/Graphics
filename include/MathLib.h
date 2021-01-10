@@ -16,6 +16,7 @@ struct x_matrix
 
 void CreateMatrix(int row, int column, x_matrix& matrix);
 void CreateMatrixIdentity(int dimension, x_matrix& matrix);
+void MakeMatrixIdentity(x_matrix& matrix);
 void GetRandomMatrix(int row, int column, x_matrix&matrix);
 void GetUpperTriangularMatrix(x_matrix& matrix, x_matrix& resultMatrix);
 void GetLowerTriangularMatrix(x_matrix& matrix, x_matrix& resultMatrix);
@@ -47,8 +48,8 @@ float DotProduct (const x_vectorN& vector1, const x_vectorN& vector2);
 
 /*......................Scaler Multiplication*/
 x_vectorN MultiplyVector (const float& scaler, const x_vectorN& vector, x_vectorN& resultVector);
-x_vectorN MultiplyVector (const x_vectorN& vector, const float& scaler, x_vectorN& resultVector);
 
+x_vectorN MultiplyVector(const float& scaler, x_vectorN vector);
 /*......................Addition And Substraction*........*/
 void AddVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& resultVector);
 void SubVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& resultVector);
