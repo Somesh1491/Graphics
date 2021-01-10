@@ -37,19 +37,27 @@ void GetRandomMatrix(int row, int column, x_matrix& matrix)
 	CreateMatrix(row, column, matrix);
 	for (int i = 0; i < row; i++)
 		for (int j = 0; j < column; j++)
-			matrix.vector[i].vectorPtr[j] = rand() % 15;
+			matrix.vector[i].vectorPtr[j] = (rand() % 15) + 1;
 }
 
 //Right now we assume that all matrix has non-zero pivot later we update the logic
 void GetUpperTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 {
+	//Must be square matrix
+	assert(matrix.row == matrix.column);
+
+	CopyMatrix(matrix, resultMatrix);
 	//Upper Row
-	for (int i = 0; i < matrix.row - 1; i++)
+	for (int i = 0; i < resultMatrix.row - 1; i++)
 	{
 		//Lower Row
-		for (int j = i + 1; j < matrix.row; j++)
+		for (int j = i + 1; j < resultMatrix.row; j++)
 		{
-			
+			float multiplier = (resultMatrix.vector[j].vectorPtr[i]) / (resultMatrix.vector[i].vectorPtr[i]);
+			for (int k = 0; k < resultMatrix.column; k++)
+			{
+				resultMatrix.vector[j].vectorPtr[k] = (resultMatrix.vector[j].vectorPtr[k]) - (multiplier * resultMatrix.vector[i].vectorPtr[k]);
+			}
 		}
 	}
 }
@@ -58,6 +66,22 @@ void GetUpperTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 void GetLowerTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 {
 	CopyMatrix(matrix, resultMatrix);
+}
+
+float GetDeterminant(x_matrix & matrix)
+{
+	assert(matrix.row == matrix.column);
+
+	float det = 1;
+	x_matrix upperTriangularMatrix;
+	GetUpperTriangularMatrix(matrix, upperTriangularMatrix);
+
+	for (int i = 0; i < upperTriangularMatrix.row; i++)
+		det *= upperTriangularMatrix.vector[i].vectorPtr[i];
+
+	DeleteMatrix(upperTriangularMatrix);
+
+	return det;
 }
 
 bool isInvertible(x_matrix& matrix)

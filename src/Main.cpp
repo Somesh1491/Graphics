@@ -9,17 +9,16 @@ int main()
 	MemRecordStart();
 	{
 		x_matrix m1;
-		GetRandomMatrix(3, 4, m1);
-
-		x_matrix m2;
-		CopyMatrix(m1, m2);
-
-		m1.vector[1].vectorPtr[2] = 12345;
-
+		GetRandomMatrix(3, 3, m1);
 		print(m1);
 		printf("\n");
+		x_matrix m2;
+		
+		GetUpperTriangularMatrix(m1, m2);
 		print(m2);
 		printf("\n");
+
+		printf("%f", GetDeterminant(m1));
 
 		DeleteMatrix(m1);
 		DeleteMatrix(m2);

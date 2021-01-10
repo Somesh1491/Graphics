@@ -19,6 +19,7 @@ void CreateMatrixIdentity(int dimension, x_matrix& matrix);
 void GetRandomMatrix(int row, int column, x_matrix&matrix);
 void GetUpperTriangularMatrix(x_matrix& matrix, x_matrix& resultMatrix);
 void GetLowerTriangularMatrix(x_matrix& matrix, x_matrix& resultMatrix);
+float GetDeterminant(x_matrix& matrix);
 bool isInvertible(x_matrix& matrix);
 void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix);
 void SetRow(int row, x_matrix& matrix, const float* data);
