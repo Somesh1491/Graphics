@@ -1,4 +1,4 @@
-#include "MathLib.h"
+#include "x_math.h"
 
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix);
@@ -383,7 +383,7 @@ x_vectorN MultiplyVector(const float& scaler, const x_vectorN& vector, x_vectorN
 	return resultVector;
 }
 
-x_vectorN MultiplyVector(const float & scaler, const x_vectorN vector)
+x_vectorN MultiplyVector(const float& scaler, x_vectorN& vector)
 {
 	for (int i = 0; i < vector.size; i++)
 		vector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
