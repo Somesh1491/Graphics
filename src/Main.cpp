@@ -8,12 +8,18 @@ int main()
 
 	MemRecordStart();
 	{		
-		float arr1[] = {5, 3};
-		float arr2[] = { 2, 7 };
+		float arr1[] = {1, 0, 1 };
+		float arr2[] = { 0, 1, 0 };
+		float arr3[] = { 0, 0, 1 };
 
 		x_matrix m1;
-		GetRandomMatrix(4, 4, m1);
+		CreateMatrix(3, 3, m1);
+
+		SetRow(0, m1, arr1);
+		SetRow(1, m1, arr2);
+		SetRow(2, m1, arr3);
 	
+
 		x_matrix m2;
 		GetInverseMatrix(m1, m2);
 

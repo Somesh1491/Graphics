@@ -58,6 +58,29 @@ void GetUpperTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 	//Upper Row
 	for (int i = 0; i < resultMatrix.row - 1; i++)
 	{
+		bool canFindNonZeroPivot = false;
+		//if ith row pivot is zero.
+		if (resultMatrix.vector[i].vectorPtr[i] == 0)
+		{
+			//check entire ith column to find non zero entry
+			for (int row = i + 1; row < resultMatrix.row; row++)
+			{
+				if (resultMatrix.vector[row].vectorPtr[i] != 0)
+				{
+					canFindNonZeroPivot = true;
+					//swap rows
+					for (int l = 0; l < resultMatrix.column; l++)
+					{						
+						float temp = resultMatrix.vector[i].vectorPtr[l];
+						resultMatrix.vector[i].vectorPtr[l] = resultMatrix.vector[row].vectorPtr[l];
+						resultMatrix.vector[row].vectorPtr[l] = temp;
+					}
+				}
+			}
+		}
+
+		if (!canFindNonZeroPivot)
+			break;
 		//Lower Row
 		for (int j = i + 1; j < resultMatrix.row; j++)
 		{
@@ -80,6 +103,30 @@ void GetLowerTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 	//Upper Row
 	for (int i = resultMatrix.row - 1; i > 0; i--)
 	{
+		bool canFindNonZeroPivot = false;
+		//if ith row pivot is zero.
+		if (resultMatrix.vector[i].vectorPtr[i] == 0)
+		{
+			//check entire ith column to find non zero entry
+			for (int row = i + 1; row < resultMatrix.row; row++)
+			{
+				if (resultMatrix.vector[row].vectorPtr[i] != 0)
+				{
+					canFindNonZeroPivot = true;
+					//swap rows
+					for (int l = 0; l < resultMatrix.column; l++)
+					{
+						float temp = resultMatrix.vector[i].vectorPtr[l];
+						resultMatrix.vector[i].vectorPtr[l] = resultMatrix.vector[row].vectorPtr[l];
+						resultMatrix.vector[row].vectorPtr[l] = temp;
+					}
+				}
+			}
+		}
+
+		if (!canFindNonZeroPivot)
+			break;
+
 		//Lower Row
 		for (int j = i - 1; j >= 0; j--)
 		{
@@ -109,8 +156,8 @@ float GetDeterminant(x_matrix & matrix)
 }
 
 bool isInvertible(x_matrix& matrix)
-{
-	return true;
+{	
+	return (GetDeterminant(matrix) != 0) ? true : false;
 }
 
 /*...........................Gauss Jordan Elimination Approach....................*/
@@ -129,6 +176,38 @@ void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix)
 	//UpperTriangle Conversion
 	for (int i = 0; i < tempMatrix.row - 1; i++)
 	{
+		bool canFindNonZeroPivot = false;
+		//if ith row pivot is zero.
+		if (tempMatrix.vector[i].vectorPtr[i] == 0)
+		{
+			//check entire ith column to find non zero entry
+			for (int row = i + 1; row < tempMatrix.row; row++)
+			{
+				if (tempMatrix.vector[row].vectorPtr[i] != 0)
+				{
+					canFindNonZeroPivot = true;
+					//swap rows
+					for (int l = 0; l < tempMatrix.column; l++)
+					{
+						float temp = tempMatrix.vector[i].vectorPtr[l];
+						tempMatrix.vector[i].vectorPtr[l] = tempMatrix.vector[row].vectorPtr[l];
+						tempMatrix.vector[row].vectorPtr[l] = temp;
+					}
+
+					//swap inverse matrix row
+					for (int l = 0; l < tempMatrix.column; l++)
+					{
+						float temp = inverseMatrix.vector[i].vectorPtr[l];
+						inverseMatrix.vector[i].vectorPtr[l] = inverseMatrix.vector[row].vectorPtr[l];
+						inverseMatrix.vector[row].vectorPtr[l] = temp;
+					}
+				}
+			}
+		}
+
+		if (!canFindNonZeroPivot)
+			break;
+
 		for (int j = i + 1; j < tempMatrix.row; j++)
 		{
 			float multiplier = (tempMatrix.vector[j].vectorPtr[i]) / (tempMatrix.vector[i].vectorPtr[i]);
