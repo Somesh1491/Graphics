@@ -247,7 +247,7 @@ void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix)
 	for (int i = 0; i < inverseMatrix.row; i++)
 	{
 		float multiplier = 1.0f / tempMatrix.vector[i].vectorPtr[i];
-		MultiplyVector(multiplier, inverseMatrix.vector[i]);
+		MultiplyVector(multiplier, inverseMatrix.vector[i], inverseMatrix.vector[i]);
 	}
 
 	DeleteMatrix(tempMatrix);
@@ -401,20 +401,11 @@ float DotProduct(const x_vectorN& vector1, const x_vectorN& vector2)
 }
 
 x_vectorN MultiplyVector(const float& scaler, const x_vectorN& vector, x_vectorN& resultVector)
-{
-	CreateVector(vector.size, resultVector);	
+{	
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
 
 	return resultVector;
-}
-
-x_vectorN MultiplyVector(const float& scaler, x_vectorN& vector)
-{
-	for (int i = 0; i < vector.size; i++)
-		vector.vectorPtr[i] = vector.vectorPtr[i] * scaler;
-
-	return vector;
 }
 
 void AddVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& resultVector)
@@ -422,7 +413,6 @@ void AddVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& re
 	//check precondition of vector dot product 
 	assert(vector1.size == vector2.size);
 
-	CreateVector(vector1.size, resultVector);
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector1.vectorPtr[i] + vector2.vectorPtr[i];
 }
@@ -432,7 +422,6 @@ void SubVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& re
 	//check precondition of vector dot product 
 	assert(vector1.size == vector2.size);
 
-	CreateVector(vector1.size, resultVector);
 	for (int i = 0; i < resultVector.size; i++)
 		resultVector.vectorPtr[i] = vector1.vectorPtr[i] - vector2.vectorPtr[i];
 }

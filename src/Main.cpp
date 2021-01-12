@@ -9,26 +9,20 @@ int main()
 
 	MemRecordStart();
 	{		
-
 		Vector2 v1;
-		v1.Randomize();	
+		v1.SetVector(2, 3);
 
-		Vector2 v2;
-		v2.Randomize();
-
+		Vector2 v2(1, 5);
 		v1.print();
 		v2.print();
 
-		Vector2 v3;
-		v3.Randomize();
-
+		Vector2 v3 = v1 * 4.0f;
 		v3.print();
-
 	}
 	MemRecordStop();
 	DisplayMemStatus();
 
 	_CrtDumpMemoryLeaks();
 	system("pause");
-	return 0;
+	return -1;
 }

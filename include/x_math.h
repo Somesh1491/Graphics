@@ -52,7 +52,6 @@ float DotProduct (const x_vectorN& vector1, const x_vectorN& vector2);
 /*......................Scaler Multiplication*/
 x_vectorN MultiplyVector (const float& scaler, const x_vectorN& vector, x_vectorN& resultVector);
 
-x_vectorN MultiplyVector(const float& scaler, x_vectorN& vector);
 /*......................Addition And Substraction*........*/
 void AddVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& resultVector);
 void SubVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& resultVector);
