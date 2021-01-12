@@ -1,5 +1,6 @@
 #include "x_math.h"
 
+int randomSeedsFlag = 0;
 /*.........................FUNCTION DECLARATIONS.............................*/
 void DotProductMultiplication(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix);
 
@@ -46,6 +47,10 @@ void GetRandomMatrix(int row, int column, x_matrix& matrix)
 	for (int i = 0; i < row; i++)
 		for (int j = 0; j < column; j++)
 			matrix.vector[i].vectorPtr[j] = (rand() % 15) + 1;
+}
+
+void Randomize(x_matrix & matrix)
+{
 }
 
 //Right now we assume that all matrix has non-zero pivot later we update the logic
@@ -347,12 +352,33 @@ void CreateVector(int size, x_vectorN& resultVector)
 	resultVector.size = size;
 }
 
+void SetVector(x_vectorN vector, float * data)
+{
+	for (int i = 0; i < vector.size; i++)
+	{
+		vector.vectorPtr[i] = data[i];
+	}
+}
+
 void GetRandomVector(int size, x_vectorN& resultVector)
 {
-	srand(time(0));
+	srand(randomSeedsFlag++);
+	
 	CreateVector(size, resultVector);
 	for (int i = 0; i < resultVector.size; i++)
+	{
 		resultVector.vectorPtr[i] = rand() % 10;
+	}
+}
+
+void Randomize(x_vectorN & vector)
+{
+	srand(randomSeedsFlag++);
+
+	for (int i = 0; i < vector.size; i++)
+	{
+		vector.vectorPtr[i] = rand() % 10;
+	}
 }
 
 void DeleteVector(x_vectorN& vector)

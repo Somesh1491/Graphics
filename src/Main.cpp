@@ -1,6 +1,7 @@
 #include "MemorySnap.h"
 #include "MathLib.h"
 #include<iostream>
+#include "Debug.h"
 
 int main()
 {
@@ -8,28 +9,21 @@ int main()
 
 	MemRecordStart();
 	{		
-		float arr1[] = {1, 0, 1 };
-		float arr2[] = { 0, 1, 0 };
-		float arr3[] = { 0, 0, 1 };
 
-		x_matrix m1;
-		CreateMatrix(3, 3, m1);
+		Vector2 v1;
+		v1.Randomize();	
 
-		SetRow(0, m1, arr1);
-		SetRow(1, m1, arr2);
-		SetRow(2, m1, arr3);
-	
+		Vector2 v2;
+		v2.Randomize();
 
-		x_matrix m2;
-		GetInverseMatrix(m1, m2);
+		v1.print();
+		v2.print();
 
-		print(m1);
-		printf("\n");
-		print(m2);
-		printf("\n");
+		Vector2 v3;
+		v3.Randomize();
 
-		DeleteMatrix(m1);
-		DeleteMatrix(m2);
+		v3.print();
+
 	}
 	MemRecordStop();
 	DisplayMemStatus();

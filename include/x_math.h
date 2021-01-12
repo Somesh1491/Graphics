@@ -18,6 +18,7 @@ void CreateMatrix(int row, int column, x_matrix& matrix);
 void CreateMatrixIdentity(int dimension, x_matrix& matrix);
 void MakeMatrixIdentity(x_matrix& matrix);
 void GetRandomMatrix(int row, int column, x_matrix&matrix);
+void Randomize(x_matrix& matrix);
 void GetUpperTriangularMatrix(x_matrix& matrix, x_matrix& resultMatrix);
 void GetLowerTriangularMatrix(x_matrix& matrix, x_matrix& resultMatrix);
 float GetDeterminant(x_matrix& matrix);
@@ -40,7 +41,9 @@ struct x_vectorN
 };
 
 void CreateVector(int size, x_vectorN& resultVector);
+void SetVector(x_vectorN vector, float* data);
 void GetRandomVector(int size, x_vectorN& resultVector);
+void Randomize(x_vectorN& vector);
 void DeleteVector(x_vectorN& vector);
 
 /*......................DOT PRODUCT.....................*/
