@@ -110,6 +110,22 @@ Vector3 operator*(const Vector3 & vector, const float & scaler)
 
 	return resultVector;
 }
+
+Vector4 operator*(const float & scaler, const Vector4 & vector)
+{
+	Vector4 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4 operator*(const Vector4 & vector, const float & scaler)
+{
+	Vector4 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
 /*.......................Friend Functions.................*/
 
 Vector3::Vector3() : Vector(3), x(0), y(0), z(0)
@@ -146,6 +162,45 @@ Vector3 Vector3::operator+(const Vector3 & vector)
 Vector3 Vector3::operator-(const Vector3 & vector)
 {
 	Vector3 resultVector;
+	::SubVector(x_vector, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4::Vector4() : Vector(4), x(0), y(0), z(0), w(0)
+{
+}
+
+Vector4::Vector4(const float& x, const float& y, const float& z, const float& w) : Vector(4), x(x), y(y), z(z), w(w)
+{
+	SetVector(x, y, z, w);
+}
+
+Vector4::Vector4(const Vector4 & vector) : Vector(vector)
+{
+}
+
+Vector4::~Vector4()
+{
+}
+
+void Vector4::SetVector(const float & x, const float & y, const float & z, const float & w)
+{
+	float data[] = { x, y, z, w };
+	::SetVector(x_vector, data);
+}
+
+Vector4 Vector4::operator+(const Vector4 & vector)
+{
+	Vector4 resultVector;
+	::AddVector(x_vector, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4 Vector4::operator-(const Vector4 & vector)
+{
+	Vector4 resultVector;
 	::SubVector(x_vector, vector.x_vector, resultVector.x_vector);
 
 	return resultVector;

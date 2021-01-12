@@ -58,6 +58,24 @@ private:
 	float x, y, z;
 };
 
+class Vector4 : public Vector
+{
+public:
+	Vector4();
+	Vector4(const float& x, const float& y, const float& z, const float& w);
+	Vector4(const Vector4& vector);
+	~Vector4();
+
+	void SetVector(const float& x, const float& y, const float& z, const float& w);
+	Vector4 operator+(const Vector4& vector);
+	Vector4 operator-(const Vector4& vector);
+	friend Vector4 operator*(const float& scaler, const Vector4& vector);
+	friend Vector4 operator*(const Vector4& vector, const float& scaler);
+
+private:
+	float x, y, z, w;
+};
+
 class Matrix
 {
 private:
