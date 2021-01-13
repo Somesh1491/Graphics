@@ -10,15 +10,15 @@ int main()
 	MemRecordStart();
 	{		
 		Matrix2x2 m1;
-		m1.SetRow(0, Vector2(1, 5));
-		m1.SetRow(1, Vector2(3, 1));
-		//m1.ToUpperTriangularMatrix();
+		m1.SetRow(0, Vector2(0, -1));
+		m1.SetRow(1, Vector2(1, 0));
+
 		m1.print();
 		printf("\n");
-		Matrix2x2 m2 = m1.GetLowerTriangularMatrix();
+
+		Matrix2x2 m2 = m1.GetInverseMatrix();
 		m2.print();
 
-		float d = m1.GetDeterminant();
 	}
 	MemRecordStop();
 	DisplayMemStatus();

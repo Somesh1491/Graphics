@@ -6,6 +6,7 @@ class Vector;
 class Vector2;
 class Vector3;
 class Vector4;
+class Matrix2x2;
 class Matrix;
 
 class Vector
@@ -17,6 +18,7 @@ public:
 	void Randomize();
 	Vector& operator=(const Vector& vector);
 	float operator*(const Vector& vector);
+
 	void print();
 protected:
 	x_vectorN x_vector;
@@ -37,6 +39,8 @@ public:
 	float getY() const;
 	friend Vector2 operator*(const float& scaler, const Vector2& vector);
 	friend Vector2 operator*(const Vector2& vector, const float& scaler);
+	friend Vector2 operator*(const Matrix2x2& matrix, const Vector2& vector);
+	friend Vector2 operator*(const Vector2& vector, const Matrix2x2& matrix);
 
 private:
 	float x, y;
@@ -108,4 +112,7 @@ public:
 	Matrix2x2 GetUpperTriangularMatrix();
 	Matrix2x2 GetLowerTriangularMatrix();
 	Matrix2x2 GetInverseMatrix();
+	Matrix2x2 operator*(const Matrix2x2& matrix);
+	friend Vector2 operator*(const Matrix2x2& matrix, const Vector2& vector);
+	friend Vector2 operator*(const Vector2& vector, const Matrix2x2& matrix);
 };

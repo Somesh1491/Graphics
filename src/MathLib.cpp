@@ -105,6 +105,22 @@ Vector2 operator*(const Vector2 & vector, const float & scaler)
 	return resultVector;
 }
 
+Vector2 operator*(const Matrix2x2 & matrix, const Vector2 & vector)
+{
+	Vector2 resultVector;
+	::MultiplyMatrixWithVector(matrix.x_matrix, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector2 operator*(const Vector2 & vector, const Matrix2x2 & matrix)
+{
+	Vector2 resultVector;
+	::MultiplyMatrixWithVector(vector.x_vector, matrix.x_matrix, resultVector.x_vector);
+
+	return resultVector;
+}
+
 Vector3 operator*(const float & scaler, const Vector3 & vector)
 {
 	Vector3 resultVector;
@@ -317,6 +333,14 @@ Matrix2x2 Matrix2x2::GetInverseMatrix()
 {
 	Matrix2x2 resultMatrix;
 	::GetInverseMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix2x2 Matrix2x2::operator*(const Matrix2x2 & matrix)
+{
+	Matrix2x2 resultMatrix;
+	::MultiplyMatrix(x_matrix, matrix.x_matrix, resultMatrix.x_matrix);
 
 	return resultMatrix;
 }

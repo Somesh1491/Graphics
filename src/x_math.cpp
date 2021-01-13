@@ -167,6 +167,7 @@ float GetDeterminant(x_matrix & matrix)
 
 	float det = 1;
 	x_matrix upperTriangularMatrix;
+	CreateMatrix(matrix.row, matrix.column, upperTriangularMatrix);
 	GetUpperTriangularMatrix(matrix, upperTriangularMatrix);
 
 	for (int i = 0; i < upperTriangularMatrix.row; i++)
@@ -192,16 +193,19 @@ void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix)
 
 	//make inverse matrix identity
 	x_matrix tempMatrix;
+	CreateMatrix(matrix.row, matrix.column, tempMatrix);
+
 	CopyMatrix(matrix, tempMatrix);
-	CreateMatrixIdentity(matrix.row, inverseMatrix);
+	MakeMatrixIdentity(inverseMatrix);
 
 	//UpperTriangle Conversion
 	for (int i = 0; i < tempMatrix.row - 1; i++)
 	{
-		bool canFindNonZeroPivot = false;
+		bool canFindNonZeroPivot = true;
 		//if ith row pivot is zero.
 		if (tempMatrix.vector[i].vectorPtr[i] == 0)
 		{
+			bool canFindNonZeroPivot = false;
 			//check entire ith column to find non zero entry
 			for (int row = i + 1; row < tempMatrix.row; row++)
 			{
