@@ -7,6 +7,7 @@ Vector::Vector(int size)
 
 Vector::Vector(const Vector & vector)
 {
+	CreateVector(vector.x_vector.size, x_vector);
 	CopyVector(vector.x_vector, x_vector);
 }
 
@@ -22,8 +23,7 @@ void Vector::Randomize()
 
 Vector& Vector::operator=(const Vector & vector)
 {
-	memcpy(x_vector.vectorPtr, vector.x_vector.vectorPtr, sizeof(float) * vector.x_vector.size);
-
+	CopyVector(vector.x_vector, x_vector);
 	return *this;
 }
 
@@ -76,6 +76,16 @@ Vector2 Vector2::operator-(const Vector2 & vector)
 	::SubVector(x_vector, vector.x_vector, resultVector.x_vector);
 
 	return resultVector;
+}
+
+float Vector2::getX() const
+{
+	return x;
+}
+
+float Vector2::getY() const
+{
+	return y;
 }
 
 /*.......................Friend Functions.................*/
@@ -204,4 +214,109 @@ Vector4 Vector4::operator-(const Vector4 & vector)
 	::SubVector(x_vector, vector.x_vector, resultVector.x_vector);
 
 	return resultVector;
+}
+
+Matrix::Matrix(int row, int column)
+{
+	CreateMatrix(row, column, x_matrix);
+}
+
+Matrix::Matrix(const Matrix & matrix)
+{
+	CreateMatrix(matrix.x_matrix.row, matrix.x_matrix.column, x_matrix);
+	CopyMatrix(matrix.x_matrix, x_matrix);
+}
+
+Matrix::~Matrix()
+{
+	DeleteMatrix(x_matrix);
+}
+
+void Matrix::ToIdentity()
+{
+	::MakeMatrixIdentity(x_matrix);
+}
+
+void Matrix::Randomize()
+{
+	::Randomize(x_matrix);
+}
+
+void Matrix::ToUpperTriangularMatrix()
+{
+	::GetUpperTriangularMatrix(x_matrix, x_matrix);
+}
+
+void Matrix::ToLowerTriangularMatrix()
+{
+	::GetLowerTriangularMatrix(x_matrix, x_matrix);
+}
+
+float Matrix::GetDeterminant()
+{
+	return ::GetDeterminant(x_matrix);
+}
+
+bool Matrix::isInvertible()
+{
+	return ::isInvertible(x_matrix);
+}
+
+Matrix & Matrix::operator=(const Matrix & matrix)
+{
+	CopyMatrix(matrix.x_matrix, x_matrix);
+	return *this;
+}
+
+void Matrix::print()
+{
+	::print(x_matrix);
+}
+
+Matrix2x2::Matrix2x2() : Matrix(2, 2)
+{
+}
+
+Matrix2x2::Matrix2x2(const Matrix2x2 & matrix) : Matrix(matrix)
+{
+}
+
+Matrix2x2::~Matrix2x2()
+{
+}
+
+void Matrix2x2::SetRow(const int & row, const Vector2 & vector)
+{
+	const float data[2] = {vector.getX(), vector.getY()};
+	::SetRow(row, x_matrix, data);
+}
+
+void Matrix2x2::SetColumn(const int & column, const Vector2 & vector)
+{
+	const float data[2] = { vector.getX(), vector.getY() };
+	::SetColumn(column, x_matrix, data);
+}
+
+Matrix2x2 Matrix2x2::GetUpperTriangularMatrix()
+{
+	Matrix2x2 resultMatrix;
+	::GetUpperTriangularMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix2x2 Matrix2x2::GetLowerTriangularMatrix()
+{
+	Matrix2x2 resultMatrix;
+	::GetLowerTriangularMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix2x2 Matrix2x2::GetInverseMatrix()
+{
+	Matrix2x2 resultMatrix;
+	::GetInverseMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
 }

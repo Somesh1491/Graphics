@@ -33,6 +33,8 @@ public:
 	void SetVector(const float& x, const float& y);
 	Vector2 operator+(const Vector2& vector);
 	Vector2 operator-(const Vector2& vector);
+	float getX() const;
+	float getY() const;
 	friend Vector2 operator*(const float& scaler, const Vector2& vector);
 	friend Vector2 operator*(const Vector2& vector, const float& scaler);
 
@@ -78,6 +80,32 @@ private:
 
 class Matrix
 {
-private:
+public:
+	Matrix(int row, int column);
+	Matrix(const Matrix& matrix);
+	~Matrix();
+	void ToIdentity();
+	void Randomize();
+	void ToUpperTriangularMatrix();
+	void ToLowerTriangularMatrix();
+	float GetDeterminant();
+	bool isInvertible();
+	Matrix& operator=(const Matrix& vector);
+	void print();
+protected:
 	x_matrix x_matrix;
+};
+
+class Matrix2x2 : public Matrix
+{
+public:
+	Matrix2x2();
+	Matrix2x2(const Matrix2x2& matrix);
+	~Matrix2x2();
+
+	void SetRow(const int& row, const Vector2& vector);
+	void SetColumn(const int& column, const Vector2& vector);
+	Matrix2x2 GetUpperTriangularMatrix();
+	Matrix2x2 GetLowerTriangularMatrix();
+	Matrix2x2 GetInverseMatrix();
 };

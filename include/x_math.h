@@ -26,7 +26,7 @@ bool isInvertible(x_matrix& matrix);
 void GetInverseMatrix(x_matrix& matrix, x_matrix& inverseMatrix);
 void SetRow(int row, x_matrix& matrix, const float* data);
 void SetColumn(int column, x_matrix& matrix, const float* data);
-void CopyMatrix(x_matrix& matrix, x_matrix& resultMatrix);
+void CopyMatrix(const x_matrix& matrix, x_matrix& resultMatrix);
 void DeleteMatrix(x_matrix& matrix);
 void MultiplyMatrix(const x_matrix& matrix1, const x_matrix& matrix2, x_matrix& resultMatrix);
 /*..........................Return a Row Vector.............*/

@@ -9,18 +9,16 @@ int main()
 
 	MemRecordStart();
 	{		
-		Vector4 v1;
-		v1.SetVector(2, 3, 4, 2);
+		Matrix2x2 m1;
+		m1.SetRow(0, Vector2(1, 5));
+		m1.SetRow(1, Vector2(3, 1));
+		//m1.ToUpperTriangularMatrix();
+		m1.print();
+		printf("\n");
+		Matrix2x2 m2 = m1.GetLowerTriangularMatrix();
+		m2.print();
 
-		Vector4 v2(1, 5, 3, 1);
-		v1.print();
-		v2.print();
-
-		Vector4 v3(9, 5, 1, 5);
-		v3.print();
-
-		Vector4 v4 = 3 * v1 + v2 + v3;
-		v4.print();
+		float d = m1.GetDeterminant();
 	}
 	MemRecordStop();
 	DisplayMemStatus();

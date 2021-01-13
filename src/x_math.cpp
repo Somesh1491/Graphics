@@ -36,7 +36,17 @@ void MakeMatrixIdentity(x_matrix & matrix)
 	assert(matrix.row == matrix.column);
 
 	for (int i = 0; i < matrix.row; i++)
-		matrix.vector[i].vectorPtr[i] = 1;
+	{
+		for (int j = 0; j < matrix.column; j++)
+		{
+			if(i == j)
+		    	matrix.vector[i].vectorPtr[j] = 1;
+
+			else
+				matrix.vector[i].vectorPtr[j] = 0;
+		}
+		
+	}
 }
 
 void GetRandomMatrix(int row, int column, x_matrix& matrix)
@@ -51,6 +61,11 @@ void GetRandomMatrix(int row, int column, x_matrix& matrix)
 
 void Randomize(x_matrix & matrix)
 {
+	srand(randomSeedsFlag++);	
+
+	for (int i = 0; i < matrix.row; i++)
+		for (int j = 0; j < matrix.column; j++)
+			matrix.vector[i].vectorPtr[j] = (rand() % 15) + 1;
 }
 
 //Right now we assume that all matrix has non-zero pivot later we update the logic
@@ -62,11 +77,12 @@ void GetUpperTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 	CopyMatrix(matrix, resultMatrix);
 	//Upper Row
 	for (int i = 0; i < resultMatrix.row - 1; i++)
-	{
-		bool canFindNonZeroPivot = false;
+	{	
+		bool canFindNonZeroPivot = true;
 		//if ith row pivot is zero.
 		if (resultMatrix.vector[i].vectorPtr[i] == 0)
 		{
+			bool canFindNonZeroPivot = false;
 			//check entire ith column to find non zero entry
 			for (int row = i + 1; row < resultMatrix.row; row++)
 			{
@@ -108,10 +124,11 @@ void GetLowerTriangularMatrix(x_matrix & matrix, x_matrix & resultMatrix)
 	//Upper Row
 	for (int i = resultMatrix.row - 1; i > 0; i--)
 	{
-		bool canFindNonZeroPivot = false;
+		bool canFindNonZeroPivot = true;
 		//if ith row pivot is zero.
 		if (resultMatrix.vector[i].vectorPtr[i] == 0)
 		{
+			bool canFindNonZeroPivot = false;
 			//check entire ith column to find non zero entry
 			for (int row = i + 1; row < resultMatrix.row; row++)
 			{
@@ -269,10 +286,8 @@ void SetColumn(int column, x_matrix& matrix, const float* columnData)
 	}
 }
 
-void CopyMatrix(x_matrix& matrix, x_matrix& resultMatrix)
+void CopyMatrix(const x_matrix& matrix, x_matrix& resultMatrix)
 {
-	CreateMatrix(matrix.row, matrix.column, resultMatrix);
-
 	for (int i = 0; i < matrix.row; i++)
 		memcpy(resultMatrix.vector[i].vectorPtr, matrix.vector[i].vectorPtr, sizeof(float) * matrix.vector[i].size);
 }
@@ -428,7 +443,6 @@ void SubVector(const x_vectorN& vector1, const x_vectorN& vector2, x_vectorN& re
 
 void CopyVector(const x_vectorN & vector, x_vectorN & resultVector)
 {
-	CreateVector(vector.size, resultVector);
 	memcpy(resultVector.vectorPtr, vector.vectorPtr, sizeof(float) * vector.size);
 }
 
