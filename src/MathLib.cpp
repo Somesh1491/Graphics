@@ -88,71 +88,7 @@ float Vector2::getY() const
 	return y;
 }
 
-/*.......................Friend Functions.................*/
-Vector2 operator*(const float& scaler, const Vector2 & vector)
-{
-	Vector2 resultVector;
-    ::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
 
-	return resultVector;
-}
-
-Vector2 operator*(const Vector2 & vector, const float & scaler)
-{
-	Vector2 resultVector;
-	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
-
-	return resultVector;
-}
-
-Vector2 operator*(const Matrix2x2 & matrix, const Vector2 & vector)
-{
-	Vector2 resultVector;
-	::MultiplyMatrixWithVector(matrix.x_matrix, vector.x_vector, resultVector.x_vector);
-
-	return resultVector;
-}
-
-Vector2 operator*(const Vector2 & vector, const Matrix2x2 & matrix)
-{
-	Vector2 resultVector;
-	::MultiplyMatrixWithVector(vector.x_vector, matrix.x_matrix, resultVector.x_vector);
-
-	return resultVector;
-}
-
-Vector3 operator*(const float & scaler, const Vector3 & vector)
-{
-	Vector3 resultVector;
-	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
-
-	return resultVector;
-}
-
-Vector3 operator*(const Vector3 & vector, const float & scaler)
-{
-	Vector3 resultVector;
-	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
-
-	return resultVector;
-}
-
-Vector4 operator*(const float & scaler, const Vector4 & vector)
-{
-	Vector4 resultVector;
-	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
-
-	return resultVector;
-}
-
-Vector4 operator*(const Vector4 & vector, const float & scaler)
-{
-	Vector4 resultVector;
-	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
-
-	return resultVector;
-}
-/*.......................Friend Functions.................*/
 
 Vector3::Vector3() : Vector(3), x(0), y(0), z(0)
 {
@@ -193,6 +129,21 @@ Vector3 Vector3::operator-(const Vector3 & vector)
 	return resultVector;
 }
 
+float Vector3::getX() const
+{
+	return x;
+}
+
+float Vector3::getY() const
+{
+	return y;
+}
+
+float Vector3::getZ() const
+{
+	return z;
+}
+
 Vector4::Vector4() : Vector(4), x(0), y(0), z(0), w(0)
 {
 }
@@ -230,6 +181,26 @@ Vector4 Vector4::operator-(const Vector4 & vector)
 	::SubVector(x_vector, vector.x_vector, resultVector.x_vector);
 
 	return resultVector;
+}
+
+float Vector4::getX() const
+{
+	return x;
+}
+
+float Vector4::getY() const
+{
+	return y;
+}
+
+float Vector4::getZ() const
+{
+	return z;
+}
+
+float Vector4::getW() const
+{
+	return w;
 }
 
 Matrix::Matrix(int row, int column)
@@ -344,3 +315,213 @@ Matrix2x2 Matrix2x2::operator*(const Matrix2x2 & matrix)
 
 	return resultMatrix;
 }
+
+Matrix3x3::Matrix3x3() : Matrix(3, 3)
+{
+}
+
+Matrix3x3::Matrix3x3(const Matrix3x3 & matrix) : Matrix(matrix)
+{
+}
+
+Matrix3x3::~Matrix3x3()
+{
+}
+
+void Matrix3x3::SetRow(const int & row, const Vector3 & vector)
+{
+	const float data[3] = { vector.getX(), vector.getY(), vector.getZ() };
+	::SetRow(row, x_matrix, data);
+}
+
+void Matrix3x3::SetColumn(const int & column, const Vector3 & vector)
+{
+	const float data[3] = { vector.getX(), vector.getY(), vector.getZ() };
+	::SetColumn(column, x_matrix, data);
+}
+
+Matrix3x3 Matrix3x3::GetUpperTriangularMatrix()
+{
+	Matrix3x3 resultMatrix;
+	::GetUpperTriangularMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix3x3 Matrix3x3::GetLowerTriangularMatrix()
+{
+	Matrix3x3 resultMatrix;
+	::GetLowerTriangularMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix3x3 Matrix3x3::GetInverseMatrix()
+{
+	Matrix3x3 resultMatrix;
+	::GetInverseMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix3x3 Matrix3x3::operator*(const Matrix3x3 & matrix)
+{
+	Matrix3x3 resultMatrix;
+	::MultiplyMatrix(x_matrix, matrix.x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix4x4::Matrix4x4() : Matrix(4, 4)
+{
+}
+
+Matrix4x4::Matrix4x4(const Matrix4x4 & matrix) : Matrix(matrix)
+{
+}
+
+Matrix4x4::~Matrix4x4()
+{
+}
+
+void Matrix4x4::SetRow(const int & row, const Vector4 & vector)
+{
+	const float data[4] = { vector.getX(), vector.getY(), vector.getZ(), vector.getW() };
+	::SetRow(row, x_matrix, data);
+}
+
+void Matrix4x4::SetColumn(const int & column, const Vector4 & vector)
+{
+	const float data[4] = { vector.getX(), vector.getY(), vector.getZ(), vector.getW() };
+	::SetColumn(column, x_matrix, data);
+}
+
+Matrix4x4 Matrix4x4::GetUpperTriangularMatrix()
+{
+	Matrix4x4 resultMatrix;
+	::GetUpperTriangularMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix4x4 Matrix4x4::GetLowerTriangularMatrix()
+{
+	Matrix4x4 resultMatrix;
+	::GetLowerTriangularMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix4x4 Matrix4x4::GetInverseMatrix()
+{
+	Matrix4x4 resultMatrix;
+	::GetInverseMatrix(x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+Matrix4x4 Matrix4x4::operator*(const Matrix4x4 & matrix)
+{
+	Matrix4x4 resultMatrix;
+	::MultiplyMatrix(x_matrix, matrix.x_matrix, resultMatrix.x_matrix);
+
+	return resultMatrix;
+}
+
+/*.......................Friend Functions.................*/
+Vector2 operator*(const float& scaler, const Vector2 & vector)
+{
+	Vector2 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector2 operator*(const Vector2 & vector, const float & scaler)
+{
+	Vector2 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector2 operator*(const Matrix2x2 & matrix, const Vector2 & vector)
+{
+	Vector2 resultVector;
+	::MultiplyMatrixWithVector(matrix.x_matrix, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector2 operator*(const Vector2 & vector, const Matrix2x2 & matrix)
+{
+	Vector2 resultVector;
+	::MultiplyMatrixWithVector(vector.x_vector, matrix.x_matrix, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector3 operator*(const float & scaler, const Vector3 & vector)
+{
+	Vector3 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector3 operator*(const Vector3 & vector, const float & scaler)
+{
+	Vector3 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector3 operator*(const Matrix3x3 & matrix, const Vector3 & vector)
+{
+	Vector3 resultVector;
+	::MultiplyMatrixWithVector(matrix.x_matrix, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector3 operator*(const Vector3 & vector, const Matrix3x3 & matrix)
+{
+	Vector3 resultVector;
+	::MultiplyMatrixWithVector(vector.x_vector, matrix.x_matrix, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4 operator*(const float & scaler, const Vector4 & vector)
+{
+	Vector4 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4 operator*(const Vector4 & vector, const float & scaler)
+{
+	Vector4 resultVector;
+	::MultiplyVector(scaler, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4 operator*(const Matrix4x4 & matrix, const Vector4 & vector)
+{
+	Vector4 resultVector;
+	::MultiplyMatrixWithVector(matrix.x_matrix, vector.x_vector, resultVector.x_vector);
+
+	return resultVector;
+}
+
+Vector4 operator*(const Vector4 & vector, const Matrix4x4 & matrix)
+{
+	Vector4 resultVector;
+	::MultiplyMatrixWithVector(vector.x_vector, matrix.x_matrix, resultVector.x_vector);
+
+	return resultVector;
+}
+/*.......................Friend Functions.................*/
