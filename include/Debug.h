@@ -5,4 +5,3 @@
 
 template<typename T>
 void Log(T& object);
-
