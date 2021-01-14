@@ -2,6 +2,7 @@
 #include "MathLib.h"
 #include<iostream>
 #include "Debug.h"
+#include "BGI/include/graphics.h"
 
 int main()
 {
@@ -9,16 +10,14 @@ int main()
 
 	MemRecordStart();
 	{		
-		Matrix2x2 m1;
-		m1.SetRow(0, Vector2(0, -1));
-		m1.SetRow(1, Vector2(1, 0));
+		printf("Hello");
+		initwindow(800, 600);
 
-		m1.print();
-		printf("\n");
+		line(200, 300, 400, 600);
 
-		Matrix2x2 m2 = m1.GetInverseMatrix();
-		m2.print();
-
+		while (!kbhit())
+		{
+		}
 	}
 	MemRecordStop();
 	DisplayMemStatus();
