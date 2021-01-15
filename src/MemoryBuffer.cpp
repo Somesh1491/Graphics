@@ -1,16 +1,30 @@
 #include "MemoryBuffer.h"
 
-void GenFrameBuffer(FrameBuffer* frameBuffer)
+void GenVertexBuffer(x_vertexBuffer* vertexBuffer, int vertexCount,  x_vertex2* data)
 {
-	frameBuffer->pixelBufferPtr = (Point2**)malloc(sizeof(Point2*) * SCREEN_WIDTH);
+	vertexBuffer->vertexCount = vertexCount;
+	vertexBuffer->vertexBufferPtr = (x_vertex2*)malloc(sizeof(x_vertex2) * vertexCount);
+
+	//Copy Data from data to vertexBuffer
+	memcpy(vertexBuffer->vertexBufferPtr, data, sizeof(x_vertex2) * vertexCount);
+}
+
+void GenFrameBuffer(x_frameBuffer* frameBuffer)
+{
+	frameBuffer->pixelBufferPtr = (x_point2**)malloc(sizeof(x_point2*) * SCREEN_WIDTH);
 
 	for (int i = 0; i < SCREEN_WIDTH; i++)
 	{
-		frameBuffer->pixelBufferPtr[i] = (Point2*)malloc(sizeof(Point2) * SCREEN_HEIGHT);
+		frameBuffer->pixelBufferPtr[i] = (x_point2*)malloc(sizeof(x_point2) * SCREEN_HEIGHT);
 	}
 }
 
-void DeleteFrameBuffer(FrameBuffer & frameBuffer)
+void DeleteVertexBuffer(x_vertexBuffer& vertexBuffer)
+{
+	free(vertexBuffer.vertexBufferPtr);
+}
+
+void DeleteFrameBuffer(x_frameBuffer & frameBuffer)
 {
 	for (int i = 0; i < SCREEN_WIDTH; i++)
 		free(frameBuffer.pixelBufferPtr[i]);

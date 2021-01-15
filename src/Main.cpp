@@ -3,6 +3,7 @@
 #include<iostream>
 #include "Debug.h"
 #include "BGI/include/graphics.h"
+#include "MemoryBuffer.h"
 
 int main()
 {
@@ -10,30 +11,28 @@ int main()
 
 	MemRecordStart();
 	{		
-		Vector2 v1;
-		Vector3 v2;
-		Vector4 v3;
-		Log(v1);
-		Log(v2);
-		Log(v3);
+		x_vertex2 v1;
+		v1.x = 2;
+		v1.y = 4;
 
-		printf("\n");
+		x_vertex2 v2;
+		v2.x = 1;
+		v2.y = 5;
 
-		Matrix2x2 m1;
-		Matrix3x3 m2;
-		Matrix4x4 m3;
-		Log(m1);
-		Log(m2);
-		Log(m3);
-
-		printf("Hello");
-		initwindow(800, 600);
-
-		line(200, 300, 400, 600);
-
-		while (!kbhit())
+		x_vertex2 vertexData[] = 
 		{
+			v1, v2
+		};
+
+		x_vertexBuffer vb;
+		GenVertexBuffer(&vb, 2, vertexData);
+
+		for (int i = 0; i < 2; i++)
+		{
+			std::cout << vb.vertexBufferPtr[i].x << " " << vb.vertexBufferPtr[i].y << std::endl;
 		}
+
+		DeleteVertexBuffer(vb);
 	}
 	MemRecordStop();
 	DisplayMemStatus();
