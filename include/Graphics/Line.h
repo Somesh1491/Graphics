@@ -1,9 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "graphics.h"
+#include "BGI/include/graphics.h"
+#include "MemoryBuffer.h"
+#include "MathLib.h"
 
-struct Point
-{
-	int x, y;
-};
+void Line(int x1, int y1, int x2, int y2);

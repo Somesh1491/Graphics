@@ -1,26 +1,25 @@
-#include "Line.h"
-//#include "Math.h"
+#include "Graphics/Line.h"
 
 void PlotPoint(int x, int y);
 
 void PlotPoint(int x, int y)
 {
 	putpixel(x, y, WHITE);
-	std::cout << x << " " << y << std::endl;
 }
 
-/*Matrix MatrixFor1stOctant()
+void Line(int x1, int y1, int x2, int y2)
 {
-	return CreateMatrixIdentity(2);
-}*/
+}
 
-/*Matrix MatrixFor2ndOctant()
+void MidPoint_Algorithm(int x1, int y1, int x2, int y2)
 {
-	Matrix matrix = CreateMatrixIdentity(2);
-	matrix[0][0] = 0;
-	matrix[0][1] = 1;
-	matrix[1][0] = 1;
-	matrix[1][1] = 0;
+	int x = x1;
+	int y = y1;
 	
-	return matrix;
-}*/
+	int dy = y2 - y1;
+	int dx = x2 - x1;	
+
+	int d = 2 * dy - dx;
+	int delta_E = 2 * dy;
+	int delta_NE = 2 * (dy - dx);
+}
