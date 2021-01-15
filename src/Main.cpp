@@ -10,7 +10,7 @@ int main()
 	InitMemSnap();
 
 	MemRecordStart();
-	{		
+	{	
 		x_vertex2 v1;
 		v1.x = 2;
 		v1.y = 4;
@@ -24,12 +24,12 @@ int main()
 			v1, v2
 		};
 
-		x_vertexBuffer vb;
-		GenVertexBuffer(&vb, 2, vertexData);
-
+		x_vertexBuffer* vb = GenVertexBuffer();
+		ActiveVertexBuffer(vb);
+		VertexBufferData(vb, 2, vertexData);
 		for (int i = 0; i < 2; i++)
 		{
-			std::cout << vb.vertexBufferPtr[i].x << " " << vb.vertexBufferPtr[i].y << std::endl;
+			std::cout << vb->vertexBufferPtr[i].x << " " << vb->vertexBufferPtr[i].y << std::endl;
 		}
 
 		DeleteVertexBuffer(vb);

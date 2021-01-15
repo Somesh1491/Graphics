@@ -33,7 +33,15 @@ struct x_frameBuffer
 	int size;
 };
 
-void GenVertexBuffer(x_vertexBuffer* vertexBuffer, int vertexCount, x_vertex2* data);
-void GenFrameBuffer(x_frameBuffer* frameBuffer);
-void DeleteVertexBuffer(x_vertexBuffer& vertexBuffer);
-void DeleteFrameBuffer(x_frameBuffer& frameBuffer);
+enum x_Geometry
+{
+	LINE
+};
+
+x_vertexBuffer* GenVertexBuffer();
+void ActiveVertexBuffer(x_vertexBuffer* x_vertexBuffer);
+void VertexBufferData(x_vertexBuffer* vertexBuffer, const int vertexCount, const x_vertex2* vertexData);
+x_frameBuffer* GenFrameBuffer();
+void DeleteVertexBuffer(x_vertexBuffer* vertexBuffer);
+void DeleteFrameBuffer(x_frameBuffer* frameBuffer);
+void Draw(x_Geometry geometry); 
