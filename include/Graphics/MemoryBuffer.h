@@ -5,11 +5,13 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>
 
 struct x_point2;
 struct x_vertex2;
 struct x_vertexBuffer;
 struct x_frameBuffer;
+struct x_BinaryPixel;
 
 struct x_point2
 {
@@ -27,15 +29,16 @@ struct x_vertexBuffer
 	int vertexCount;
 };
 
-struct x_frameBuffer
+struct x_BitmapPixel
 {
-	x_point2** pixelBufferPtr;
-	int size;
+	bool pixelFlag;
 };
 
-enum x_Geometry
+struct x_frameBuffer
 {
-	LINE
+	x_BitmapPixel** pixelPtr;
+	int width;
+	int height;
 };
 
 x_vertexBuffer* GenVertexBuffer();
@@ -44,4 +47,5 @@ void VertexBufferData(x_vertexBuffer* vertexBuffer, const int vertexCount, const
 x_frameBuffer* GenFrameBuffer();
 void DeleteVertexBuffer(x_vertexBuffer* vertexBuffer);
 void DeleteFrameBuffer(x_frameBuffer* frameBuffer);
-void Draw(x_Geometry geometry); 
+void DisplayBitMapFrameBuffer();
+

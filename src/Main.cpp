@@ -1,9 +1,15 @@
 #include "MemorySnap.h"
-#include "MathLib.h"
+#include "Maths/MathLib.h"
 #include<iostream>
 #include "Debug.h"
+#include "Timer.h"
 #include "BGI/include/graphics.h"
-#include "MemoryBuffer.h"
+#include "Graphics/RenderFunctions.h"
+
+void Sum()
+{
+	int i = 0;
+}
 
 int main()
 {
@@ -11,33 +17,36 @@ int main()
 
 	MemRecordStart();
 	{	
-		x_vertex2 v1;
-		v1.x = 2;
-		v1.y = 4;
+		int window = initwindow(800, 600);
 
-		x_vertex2 v2;
-		v2.x = 1;
-		v2.y = 5;
+		x_vertex2 point1;
+		point1.x = 100;
+		point1.y = 200;
 
-		x_vertex2 vertexData[] = 
+		x_vertex2 point2;
+		point2.x = 300;
+		point2.y = 100;
+
+		x_vertex2 vertexData[] =
 		{
-			v1, v2
+			point1,
+			point2
 		};
 
 		x_vertexBuffer* vb = GenVertexBuffer();
-		ActiveVertexBuffer(vb);
 		VertexBufferData(vb, 2, vertexData);
-		for (int i = 0; i < 2; i++)
-		{
-			std::cout << vb->vertexBufferPtr[i].x << " " << vb->vertexBufferPtr[i].y << std::endl;
-		}
+
+		x_frameBuffer* fb = GenFrameBuffer();
+		
+		Draw(x_Geometry::X_LINE);
+		DisplayBitMapFrameBuffer();
 
 		DeleteVertexBuffer(vb);
+		DeleteFrameBuffer(fb);
 	}
 	MemRecordStop();
 	DisplayMemStatus();
 
-	_CrtDumpMemoryLeaks();
 	system("pause");
 	return -1;
 }

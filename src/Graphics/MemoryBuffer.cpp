@@ -1,4 +1,4 @@
-#include "MemoryBuffer.h"
+#include "Graphics/MemoryBuffer.h"
 
 x_vertexBuffer* activeVertexBuffer;
 x_frameBuffer* activeFrameBuffer;
@@ -27,10 +27,13 @@ void VertexBufferData(x_vertexBuffer* vertexBuffer, const int vertexCount, const
 x_frameBuffer* GenFrameBuffer()
 {
 	x_frameBuffer* frameBuffer = (x_frameBuffer*)malloc(sizeof(x_frameBuffer));
-	frameBuffer->pixelBufferPtr = (x_point2**)malloc(sizeof(x_point2*) * SCREEN_WIDTH);
+	frameBuffer->pixelPtr = (x_BitmapPixel**)malloc(sizeof(x_BitmapPixel*) * SCREEN_HEIGHT);
 
-	for (int i = 0; i < SCREEN_WIDTH; i++)
-		frameBuffer->pixelBufferPtr[i] = (x_point2*)malloc(sizeof(x_point2) * SCREEN_HEIGHT);
+	for (int i = 0; i < SCREEN_HEIGHT; i++)
+		frameBuffer->pixelPtr[i] = (x_BitmapPixel*)malloc(sizeof(x_BitmapPixel) * SCREEN_WIDTH);
+
+	frameBuffer->width = SCREEN_WIDTH;
+	frameBuffer->height = SCREEN_HEIGHT;
 
 	activeFrameBuffer = frameBuffer;
 
@@ -45,22 +48,22 @@ void DeleteVertexBuffer(x_vertexBuffer* vertexBuffer)
 
 void DeleteFrameBuffer(x_frameBuffer* frameBuffer)
 {
-	for (int i = 0; i < SCREEN_WIDTH; i++)
-		free(frameBuffer->pixelBufferPtr[i]);
+	for (int i = 0; i < SCREEN_HEIGHT; i++)
+		free(frameBuffer->pixelPtr[i]);
 	
-	free(frameBuffer->pixelBufferPtr);
+	free(frameBuffer->pixelPtr);
 	free(frameBuffer);
 }
 
-void Draw(x_Geometry geometry)
+void DisplayBitMapFrameBuffer()
 {
-	switch (geometry)
+	for (int i = 0; i < activeFrameBuffer->height; i++)
 	{
-
-	case LINE:
-		break;
-	default:
-		break;
+		for (int j = 0; j < activeFrameBuffer->width; j++)
+		{
+			if (activeFrameBuffer->pixelPtr[i][j].pixelFlag == true)
+				std::cout << j << " " << i << std::endl;
+		}
 	}
 }
 

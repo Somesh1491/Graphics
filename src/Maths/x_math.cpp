@@ -1,4 +1,4 @@
-#include "x_math.h"
+#include "Maths/x_math.h"
 
 int randomSeedsFlag = 0;
 /*.........................FUNCTION DECLARATIONS.............................*/

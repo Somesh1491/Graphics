@@ -1,4 +1,4 @@
-#include "MathLib.h"
+#include "Maths/MathLib.h"
 
 Vector::Vector(int size)
 {
