@@ -88,11 +88,19 @@ void Line(int x1, int y1, int x2, int y2)
 		{
 			if (y2 > y1)   //3rd octatant
 			{
+<<<<<<< HEAD
+=======
+				std::cout << "3th Octant" << std::endl;
+>>>>>>> origin
 				Mid_Point_Line_Algorithm(y1, -x1, y2, -x2, 3);
 			}
 
 			else //7th octant
 			{
+<<<<<<< HEAD
+=======
+				std::cout << "7th Octant" << std::endl;
+>>>>>>> origin
 				Mid_Point_Line_Algorithm(-y1, x1, -y2, x2, 7);
 			}
 		}
