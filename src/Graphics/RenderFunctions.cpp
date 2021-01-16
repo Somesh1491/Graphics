@@ -46,13 +46,11 @@ void Line(int x1, int y1, int x2, int y2)
 		{
 			if (x2 > x1) //point is in 1st octant
 			{
-				std::cout << "1 Octant" << std::endl;
 				Mid_Point_Line_Algorithm(x1, y1, x2, y2, 1);
 			}
 
 			else  //point is in 5th octant
 			{
-				std::cout << "5 Octant" << std::endl;
 				Mid_Point_Line_Algorithm(-x1, -y1, -x2, -y2, 5);
 			}
 		}
@@ -61,13 +59,11 @@ void Line(int x1, int y1, int x2, int y2)
 		{
 			if (y2 > y1) //point is 2nd octant
 			{
-				std::cout << "2 Octant" << std::endl;
 				Mid_Point_Line_Algorithm(y1, x1, y2, x2, 2);
 			}
 
 			else
 			{
-				std::cout << "6 Octant" << std::endl;
 				Mid_Point_Line_Algorithm(-y1, -x1, -y2, -x2, 6);
 			}
 		}
@@ -79,13 +75,11 @@ void Line(int x1, int y1, int x2, int y2)
 		{
 			if (x2 > x1)  //point is in 8th octant
 			{
-				std::cout << "8th Octant" << std::endl;
 				Mid_Point_Line_Algorithm(x1, -y1, x2, -y2, 8);
 			}
 
 			else      //point is in 4th octant
 			{
-				std::cout << "4th Octant" << std::endl;
 				Mid_Point_Line_Algorithm(-x1, y1, -x2, y2, 4);
 			}
 		}
@@ -94,14 +88,12 @@ void Line(int x1, int y1, int x2, int y2)
 		{
 			if (y2 > y1)   //3rd octatant
 			{
-				std::cout << "3th Octant" << std::endl;
-				Mid_Point_Line_Algorithm(-y1, x1, -y2, x2, 3);
+				Mid_Point_Line_Algorithm(y1, -x1, y2, -x2, 3);
 			}
 
 			else //7th octant
 			{
-				std::cout << "7th Octant" << std::endl;
-				Mid_Point_Line_Algorithm(y1, -x1, -y2, -x2, 7);
+				Mid_Point_Line_Algorithm(-y1, x1, -y2, x2, 7);
 			}
 		}
 	}
@@ -126,7 +118,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 		activeFrameBuffer->pixelPtr[x][y].pixelFlag = true;
 		break;
 	case 3:
-		activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
+		activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
 		break;
 	case 4:
 		activeFrameBuffer->pixelPtr[y][-x].pixelFlag = true;
@@ -138,7 +130,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 		activeFrameBuffer->pixelPtr[-x][-y].pixelFlag = true;
 		break;
 	case 7:
-		activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
+		activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
 		break;
 	case 8:
 		activeFrameBuffer->pixelPtr[-y][x].pixelFlag = true;
@@ -169,7 +161,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 			activeFrameBuffer->pixelPtr[x][y].pixelFlag = true;
 			break;
 		case 3:
-			activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
+			activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
 			break;
 		case 4:
 			activeFrameBuffer->pixelPtr[y][-x].pixelFlag = true;
@@ -181,7 +173,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 			activeFrameBuffer->pixelPtr[-x][-y].pixelFlag = true;
 			break;
 		case 7:
-			activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
+			activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
 			break;
 		case 8:
 			activeFrameBuffer->pixelPtr[-y][x].pixelFlag = true;
