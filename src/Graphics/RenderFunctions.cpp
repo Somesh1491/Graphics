@@ -95,13 +95,13 @@ void Line(int x1, int y1, int x2, int y2)
 			if (y2 > y1)   //3rd octatant
 			{
 				std::cout << "3th Octant" << std::endl;
-				Mid_Point_Line_Algorithm(-y1, x1, -y2, x2, 3);
+				Mid_Point_Line_Algorithm(y1, -x1, y2, -x2, 3);
 			}
 
 			else //7th octant
 			{
 				std::cout << "7th Octant" << std::endl;
-				Mid_Point_Line_Algorithm(y1, -x1, -y2, -x2, 7);
+				Mid_Point_Line_Algorithm(-y1, x1, -y2, x2, 7);
 			}
 		}
 	}
@@ -126,7 +126,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 		activeFrameBuffer->pixelPtr[x][y].pixelFlag = true;
 		break;
 	case 3:
-		activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
+		activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
 		break;
 	case 4:
 		activeFrameBuffer->pixelPtr[y][-x].pixelFlag = true;
@@ -138,7 +138,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 		activeFrameBuffer->pixelPtr[-x][-y].pixelFlag = true;
 		break;
 	case 7:
-		activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
+		activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
 		break;
 	case 8:
 		activeFrameBuffer->pixelPtr[-y][x].pixelFlag = true;
@@ -169,7 +169,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 			activeFrameBuffer->pixelPtr[x][y].pixelFlag = true;
 			break;
 		case 3:
-			activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
+			activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
 			break;
 		case 4:
 			activeFrameBuffer->pixelPtr[y][-x].pixelFlag = true;
@@ -181,7 +181,7 @@ void Mid_Point_Line_Algorithm(int x1, int y1, int x2, int y2, int octant)
 			activeFrameBuffer->pixelPtr[-x][-y].pixelFlag = true;
 			break;
 		case 7:
-			activeFrameBuffer->pixelPtr[x][-y].pixelFlag = true;
+			activeFrameBuffer->pixelPtr[-x][y].pixelFlag = true;
 			break;
 		case 8:
 			activeFrameBuffer->pixelPtr[-y][x].pixelFlag = true;
