@@ -2,6 +2,7 @@
 
 x_vertexBuffer* activeVertexBuffer;
 x_frameBuffer* activeFrameBuffer;
+x_transformedVertexBuffer* transformedVertexBuffer;
 
 x_vertexBuffer* GenVertexBuffer()
 {
@@ -22,6 +23,20 @@ void VertexBufferData(x_vertexBuffer* vertexBuffer, const int vertexCount, const
 
 	//Copy Data from data to vertexBuffer
 	memcpy(vertexBuffer->vertexBufferPtr, vertexData, sizeof(x_vertex2) * vertexCount);
+}
+
+x_transformedVertexBuffer* GenTransformedVertexBuffer()
+{
+	transformedVertexBuffer = (x_transformedVertexBuffer*)malloc(sizeof(x_transformedVertexBuffer));
+	transformedVertexBuffer->transformedVertexBufferPtr = (x_point2*)malloc(sizeof(x_point2) * activeVertexBuffer->vertexCount);
+
+	transformedVertexBuffer->vertexCount = activeVertexBuffer->vertexCount;
+	for (int i = 0; i < activeVertexBuffer->vertexCount; i++)
+	{
+		transformedVertexBuffer->transformedVertexBufferPtr[i].x = (int)round(activeVertexBuffer->vertexBufferPtr[i].x);
+		transformedVertexBuffer->transformedVertexBufferPtr[i].y = (int)round(activeVertexBuffer->vertexBufferPtr[i].y);
+	}
+	return transformedVertexBuffer;
 }
 
 x_frameBuffer* GenFrameBuffer()
@@ -66,5 +81,3 @@ void DisplayBitMapFrameBuffer()
 		}
 	}
 }
-
-

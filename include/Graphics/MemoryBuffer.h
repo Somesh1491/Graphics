@@ -10,8 +10,9 @@
 struct x_point2;
 struct x_vertex2;
 struct x_vertexBuffer;
+struct x_transformedVertexBuffer;
 struct x_frameBuffer;
-struct x_BinaryPixel;
+struct x_BitmapPixel;
 
 struct x_point2
 {
@@ -26,6 +27,12 @@ struct x_vertex2
 struct x_vertexBuffer
 {
 	x_vertex2* vertexBufferPtr;
+	int vertexCount;
+};
+
+struct x_transformedVertexBuffer
+{
+	x_point2* transformedVertexBufferPtr;
 	int vertexCount;
 };
 
@@ -44,8 +51,8 @@ struct x_frameBuffer
 x_vertexBuffer* GenVertexBuffer();
 void ActiveVertexBuffer(x_vertexBuffer* x_vertexBuffer);
 void VertexBufferData(x_vertexBuffer* vertexBuffer, const int vertexCount, const x_vertex2* vertexData);
+x_transformedVertexBuffer* GenTransformedVertexBuffer();
 x_frameBuffer* GenFrameBuffer();
 void DeleteVertexBuffer(x_vertexBuffer* vertexBuffer);
 void DeleteFrameBuffer(x_frameBuffer* frameBuffer);
 void DisplayBitMapFrameBuffer();
-
