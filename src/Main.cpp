@@ -1,5 +1,7 @@
 #include "MemorySnap.h"
 #include "Graphics/x_libs.h"
+#include "Maths/MathLib.h"
+#include "Debug.h"
 
 int main()
 {
@@ -9,13 +11,15 @@ int main()
 	{	
 		int window = initwindow(800, 600);
 
+		SetOrtho(200, 500, 100, 400);
+
 		x_vertex2 point1;
-		point1.x = 100;
+		point1.x = 10;
 		point1.y = 50;
 
 		x_vertex2 point2;
-		point2.x = 300;
-		point2.y = 150;
+		point2.x = 20;
+		point2.y = 55;
 
 		x_vertex2 vertexData[] =
 		{
